@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@500;600&display=swap');
+:root{--ink:#0b1450;--blue:#1736d8;--bg:#1736d8;--bg-raised:#1230b8;--panel:rgba(255,255,255,.06);--panel-solid:#1230b8;--panel-bright:rgba(255,255,255,.1);
+--line:rgba(255,255,255,.28);--line-strong:rgba(255,255,255,.7);--line-cyan:#ff6a1a;--text:#f4f7ff;--text-soft:#dfe6ff;--muted:#b4c2ff;--muted-dim:#92a4f5;
+--cyan:#ffe14a;--cyan-soft:#fff0a0;--violet:#c9b8ff;--green:#7df0c4;--amber:#ffe14a;--red:#ff8a5c;--or:#ff6a1a;--yel:#ffe14a;
+--font-display:'Archivo','Segoe UI',sans-serif;--font-body:'Archivo','Segoe UI',sans-serif;--font-mono:'IBM Plex Mono',monospace;
+--radius-xl:6px;--radius-lg:6px;--radius-md:4px;--shadow-lg:none}
+html,body,.stApp,[data-testid=stAppViewContainer]{background:var(--bg)!important;color:var(--text)}
+.stApp{font-family:var(--font-body)}
+h1,h2,h3,h4{font-family:var(--font-display)!important;color:#fff!important;font-stretch:112%;font-weight:800;letter-spacing:-.02em}
+.fm-bg::before{content:"";position:absolute;inset:0;opacity:1!important;background:
+linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px) 0 0/80px 80px,linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px) 0 0/80px 80px,
+linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/16px 16px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/16px 16px!important}
+.fm-bg::after,.fm-bg-line,.fm-bg-blob{display:none!important}
+/* cards: line-drawn panels */
+.fm-step-card,.fm-feature-card,.fm-device-card,.fm-metric,.fm-dash-card,.fm-cause-card,.fm-report-hero,.fm-report-block,.fm-chat-card,.fm-about-panel,
+.fm-aside-card,.fm-setup-card,.fm-session-hero,.fm-limit-card,.fm-principle,.fm-dist-card,.fm-hazard-card,.fm-quick-tile,.fm-pro-panel,.fm-hazard-panel,
+.fm-callout,.fm-error-card,.fm-empty-state,.fm-loader-card,.fm-local-banner,.fm-safety,.fm-vision-report,.fm-repair-step,.fm-finding,.fm-uncertainty,.fm-pipeline-step{
+background:rgba(255,255,255,.07)!important;border:1.5px solid rgba(255,255,255,.65)!important;border-radius:6px!important;box-shadow:none!important;backdrop-filter:none!important;color:#fff}
+.fm-device-card:hover,.fm-quick-tile:hover,.fm-feature-card:hover{border-color:var(--or)!important;background:rgba(255,255,255,.14)!important;transform:translateY(-4px);transition:.2s}
+.fm-final-cta{background:var(--or)!important;border:2px solid #fff!important;border-radius:6px!important;color:var(--ink)!important}.fm-final-cta *{color:var(--ink)!important}
+.fm-icon-tile,.fm-metric-icon,.fm-block-icon,.fm-device-index{background:transparent!important;border:1.5px solid #fff!important;border-radius:50%!important;color:#fff!important}
+.fm-step-number{font:600 .9rem var(--font-mono)!important;color:var(--yel)!important}
+/* labels */
+.fm-eyebrow,.fm-step-tag,.fm-local-chip,.fm-chip,.fm-hv-chip{background:var(--or)!important;color:var(--ink)!important;border:0!important;border-radius:3px!important;
+font:600 .78rem var(--font-mono)!important;letter-spacing:.02em!important;box-shadow:none!important}
+.fm-tag{background:transparent!important;color:#fff!important;border:1.5px solid #fff!important;border-radius:3px!important;font:600 .78rem var(--font-mono)!important}
+.fm-tag-high,.fm-tag-critical,.fm-tag-urgent{background:var(--or)!important;color:var(--ink)!important;border-color:var(--or)!important}
+.fm-live-dot,.fm-hud-dot{background:var(--or)!important;box-shadow:0 0 0 4px rgba(255,106,26,.3)!important}
+/* hero */
+.fm-hero h1{font-size:clamp(2.8rem,6vw,5.2rem)!important;line-height:.98!important;font-stretch:118%}
+.fm-grad-text{background:none!important;-webkit-text-fill-color:var(--yel)!important;color:var(--yel)!important}
+.fm-hero-sub{color:var(--text-soft)!important;font-size:1.12rem}
+.fm-hero-assurance span{border:1.5px solid rgba(255,255,255,.6);border-radius:3px;padding:5px 11px;color:#fff!important;font:600 .8rem var(--font-mono)}
+.fm-ticker{background:var(--or)!important;border:0!important;transform:rotate(1deg);margin:34px -3vw!important;padding:13px 0}
+.fm-ticker span{color:var(--ink)!important;font:800 1.15rem var(--font-display)!important;font-stretch:118%}.fm-ticker i{background:var(--ink)!important}
+/* buttons */
+.stButton>button,.stFormSubmitButton>button,.fm-btn{background:transparent!important;color:#fff!important;border:2px solid #fff!important;border-radius:4px!important;
+font:700 1rem var(--font-body)!important;box-shadow:none!important;transition:.15s!important}
+.stButton>button[kind=primary],.stFormSubmitButton>button[kind=primary]{background:var(--or)!important;color:var(--ink)!important;border-color:var(--or)!important}
+.stButton>button[kind=primary] *{color:var(--ink)!important}
+.stButton>button:hover,.fm-btn:hover{background:#fff!important;color:var(--ink)!important;transform:translateY(-2px)}
+.stButton>button:hover *{color:var(--ink)!important}
+/* navbar */
+.st-key-fm-navbar{background:rgba(11,20,80,.55)!important;border:0!important;border-bottom:1.5px solid rgba(255,255,255,.6)!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:blur(6px)!important}
+.st-key-fm-navbar [role=radiogroup] label{border-radius:3px!important;background:transparent!important;border:0!important;color:#fff!important;font-weight:700;padding:6px 12px!important}
+.st-key-fm-navbar [role=radiogroup] label:has(input:checked){background:#fff!important}
+.st-key-fm-navbar [role=radiogroup] label:has(input:checked) *{color:var(--ink)!important}
+.st-key-fm-navbar [role=radiogroup] label>div:first-child{display:none!important}
+/* inputs */
+[data-baseweb=input],[data-baseweb=textarea],[data-baseweb=select]>div{background:#fff!important;border:2px solid var(--ink)!important;border-radius:4px!important}
+[data-baseweb=input] input,[data-baseweb=textarea] textarea,[data-baseweb=select] *{color:var(--ink)!important}
+.stTabs [data-baseweb=tab]{color:#fff;font-weight:700}.stTabs [aria-selected=true]{color:var(--yel)}
+.fm-chat-user-bubble{background:var(--or)!important;color:var(--ink)!important;border-radius:6px!important}.fm-chat-user-bubble *{color:var(--ink)!important}
+.fm-typing-dots span{background:var(--yel)!important}
+/* hero drawing */
+.bp-stage{position:relative;border:1.5px dashed rgba(255,255,255,.55);border-radius:6px;padding:10px;background:rgba(11,20,80,.25)}
+.bp{width:100%;height:auto;max-height:540px;display:block;font-family:var(--font-mono)}
+.bp .ln{fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.bp .dr{stroke-dasharray:1;stroke-dashoffset:1;animation:bp-draw 1.5s calc(var(--i)*.22s) ease forwards}
+.bp text{fill:#fff;font-size:13px;font-weight:600}.bp .big{font-size:26px;font-weight:600;fill:var(--yel)}
+.bp .or{stroke:var(--or)}.bp .of{fill:var(--or)}.bp .late{opacity:0;animation:bp-in .6s 2s forwards}
+.bp .ring{fill:none;stroke:var(--or);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:bp-ping 1.8s 2.2s infinite}
+.bp .gear{transform-box:fill-box;transform-origin:center;animation:bp-spin 12s linear infinite}
+@keyframes bp-draw{to{stroke-dashoffset:0}}@keyframes bp-in{to{opacity:1}}
+@keyframes bp-ping{0%{transform:scale(.6);opacity:1}100%{transform:scale(2.2);opacity:0}}@keyframes bp-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.bp *{animation:none!important}.bp .dr{stroke-dashoffset:0}.bp .late{opacity:1}}
+.st-key-fm-footer .fm-footer{background:var(--ink)!important;border:0!important;border-radius:6px!important}
+.st-key-fm-footer .fm-footer *{color:#d5dcff!important}.st-key-fm-footer .fm-footer-label{color:var(--yel)!important;font-weight:800}
+.fm-loader-overlay{background:rgba(23,54,216,.9)!important}
+.fm-loader-ring,.fm-loader-ring-a,.fm-loader-ring-b{border-color:var(--or) transparent #fff transparent!important}
+/* auto: old light-on-dark text -> ink */
+.fm-about-panel h3,
+.fm-advanced-lock h4,
+.fm-aside-trust p,
+.fm-block-advanced .fm-step-index,
+.fm-block-head h3,
+.fm-brand-word,
+.fm-cause-top h4,
+.fm-chat-author b,
+.fm-chat-avatar-you,
+.fm-chat-empty h3,
+.fm-chat-live,
+.fm-chat-user-bubble p,
+.fm-chat-you,
+.fm-core-name,
+.fm-dash-card-head h3,
+.fm-dash-empty-card > span,
+.fm-delete-confirm b,
+.fm-delete-confirm p,
+.fm-device-card h3,
+.fm-dist-tone-2,
+.fm-dist-tone-3,
+.fm-error-card p,
+.fm-error-card strong,
+.fm-feature-card h3,
+.fm-final-cta h2,
+.fm-finding-area,
+.fm-form-safety b,
+.fm-hazard-chips span,
+.fm-hazard-critical .fm-hazard-head h3,
+.fm-hazard-critical .fm-hazard-kicker,
+.fm-hazard-head h3,
+.fm-hazard-title,
+.fm-hero h1,
+.fm-hero-assurance span,
+.fm-history-icon,
+.fm-history-main h3,
+.fm-hv-hud-head,
+.fm-intake-device h2,
+.fm-loader-copy h3,
+.fm-local-chip,
+.fm-metric-value,
+.fm-page-head h1,
+.fm-principle h3,
+.fm-pro-top h3,
+.fm-quick-icon,
+.fm-quick-test p,
+.fm-quick-test-label,
+.fm-recent-icon,
+.fm-report-summary,
+.fm-safety-copy h2,
+.fm-safety-note,
+.fm-safety-rule b,
+.fm-safety-rule p,
+.fm-session-hero-main h1,
+.fm-setup-copy h3,
+.fm-setup-copy p,
+.fm-setup-rows span,
+.fm-step-card h3,
+.fm-step-expect > span,
+.fm-step-index,
+.fm-step-main h4,
+.fm-step-tag,
+.fm-tag-critical,
+.fm-tag-high,
+.fm-tag-medium, .fm-tag-caution,
+.fm-tag-moderate,
+.fm-tag-neutral,
+.fm-uncertainty p,
+.fm-vision-chips span,
+.fm-vision-intro h3,
+.fm-vision-quality,
+::selection,
+[class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] h1, [class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] h2, [class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] h3, [class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] h4,
+[class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] pre code,
+[class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] strong,
+[class*='st-key-fm-chat-card-'] [data-testid='stMarkdownContainer'] th,
+[class*='st-key-fm-quick-tile-'] [data-testid='stButton'] button,
+[data-baseweb='tag'],
+[data-baseweb='tag'] span,
+[data-baseweb='tag'] svg,
+[data-testid='stCheckbox'] p,
+[data-testid='stFileUploaderDropzone'] button,
+[data-testid='stWidgetLabel'] p, [data-testid='stWidgetLabel'] label,
+button[kind='secondary']:hover, [data-testid='stBaseButton-secondary']:hover,
+code,
+li[role='option']:hover, li[aria-selected='true']{color:var(--text-soft)!important}
