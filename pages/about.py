@@ -247,7 +247,7 @@ def _credits() -> None:
             <div style="display:flex;justify-content:center;gap:56px;flex-wrap:wrap">
                 <div>
                     <p style="margin:0;font:600 .8rem var(--font-mono);color:#ffe14a">DESIGN</p>
-                    <p style="margin:4px 0 0;font:800 1.7rem var(--font-display);color:#fff">Zaman Zaher</p>
+                    <p style="margin:4px 0 0;font:800 1.7rem var(--font-display);color:#fff">Zaman Zahir</p>
                 </div>
                 <div>
                     <p style="margin:0;font:600 .8rem var(--font-mono);color:#ffe14a">DEVELOPMENT</p>
