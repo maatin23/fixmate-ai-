@@ -26,6 +26,17 @@ _BACKGROUND = """
 """
 
 
+# Light mode flips the dark design (colours and brightness) and turns pictures back the right way up.
+_LIGHT_MODE = """
+<style>
+html { filter: invert(1) hue-rotate(180deg); background: #071033; }
+img, video, [data-testid="stImage"] img { filter: invert(1) hue-rotate(180deg); }
+</style>
+"""
+
+
 def inject_styles() -> None:
     st.markdown(f"<style>{_load_css()}</style>", unsafe_allow_html=True)
     st.markdown(_BACKGROUND, unsafe_allow_html=True)
+    if st.session_state.get("theme", "dark") == "light":
+        st.markdown(_LIGHT_MODE, unsafe_allow_html=True)

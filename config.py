@@ -61,9 +61,38 @@ def get_ai_settings() -> AISettings:
     )
 
 
+def _visitor_db_path() -> Path | None:
+    """Private history file for this browser session, so visitors never see each other's chats."""
+    try:
+        import time
+        import uuid
+
+        import streamlit as st
+
+        sid = st.session_state.get("_fm_visitor_id")
+        if not sid:
+            sid = uuid.uuid4().hex
+            st.session_state["_fm_visitor_id"] = sid
+            folder = DATA_DIR / "sessions"
+            folder.mkdir(parents=True, exist_ok=True)
+            cutoff = time.time() - 24 * 3600
+            for old_file in folder.glob("*.db"):  # tidy up files from old visits
+                try:
+                    if old_file.stat().st_mtime < cutoff:
+                        old_file.unlink()
+                except OSError:
+                    pass
+        return DATA_DIR / "sessions" / f"{sid}.db"
+    except Exception:
+        return None
+
+
 def get_database_path() -> Path:
     custom = _read_setting("FIXMATE_DB_PATH")
-    path = Path(custom).expanduser() if custom else DATA_DIR / "fixmate.db"
+    if custom:
+        path = Path(custom).expanduser()
+    else:
+        path = _visitor_db_path() or DATA_DIR / "fixmate.db"
     path.parent.mkdir(parents=True, exist_ok=True)
     return path
 
@@ -203,6 +232,165 @@ DEVICE_CATEGORIES = [
         ],
     },
     {
+        "id": "tablet",
+        "label": "Tablets",
+        "short": "Tablet",
+        "icon": "tablet",
+        "tagline": "Power, touch, battery",
+        "description": "Charging faults, touch and display problems, battery wear, and boot loops.",
+        "prompt_hint": "Mention the brand and whether it was dropped, got wet, or recently updated.",
+        "symptoms": [
+            "Won't power on",
+            "Won't charge",
+            "Battery drains fast",
+            "Screen cracked or unresponsive",
+            "Touch not working properly",
+            "Overheating",
+            "Wi-Fi or Bluetooth problems",
+            "Stuck on logo or boot loop",
+            "Camera or speaker issue",
+        ],
+    },
+    {
+        "id": "printer",
+        "label": "Printers",
+        "short": "Printer",
+        "icon": "printer",
+        "tagline": "Printing, paper, connection",
+        "description": "Paper jams, poor print quality, connection drops, and ink or toner errors.",
+        "prompt_hint": "Say whether it is inkjet or laser, and how it connects (USB or Wi-Fi).",
+        "symptoms": [
+            "Won't print",
+            "Paper jams",
+            "Streaky or faded prints",
+            "Not detected by the computer",
+            "Won't connect to Wi-Fi",
+            "Error light blinking",
+            "Strange noises",
+            "Ink or toner not recognised",
+            "Prints blank pages",
+        ],
+    },
+    {
+        "id": "game_console",
+        "label": "Game consoles",
+        "short": "Console",
+        "icon": "game_console",
+        "tagline": "Video, discs, controllers",
+        "description": "No-video faults, overheating, disc and controller problems, and crashes.",
+        "prompt_hint": "Mention the console model and whether the fan is loud or the lights react.",
+        "symptoms": [
+            "Won't power on",
+            "Overheating or loud fan",
+            "No video signal",
+            "Disc not reading",
+            "Controller not connecting",
+            "Freezes or crashes",
+            "Storage or update error",
+            "No sound",
+            "Charging or port problem",
+        ],
+    },
+    {
+        "id": "router",
+        "label": "Routers",
+        "short": "Router",
+        "icon": "router",
+        "tagline": "Internet, Wi-Fi, signal",
+        "description": "Dropped connections, slow speeds, weak signal, and warning lights.",
+        "prompt_hint": "Describe the light colours and whether the problem affects all devices or only one.",
+        "symptoms": [
+            "No internet",
+            "Slow speeds",
+            "Wi-Fi keeps dropping",
+            "Weak signal in some rooms",
+            "Lights blinking red or orange",
+            "Can't open the settings page",
+            "Keeps restarting",
+            "Devices can't connect",
+            "Overheating",
+        ],
+    },
+    {
+        "id": "microwave",
+        "label": "Microwaves",
+        "short": "Microwave",
+        "icon": "microwave",
+        "tagline": "Heating, turntable, controls",
+        "description": "Heating faults, turntable problems, and control panel issues. Never open the casing.",
+        "prompt_hint": "Mention whether it hums, the light works, and whether the door closes firmly.",
+        "symptoms": [
+            "Won't heat",
+            "Turntable not spinning",
+            "Sparks inside",
+            "Display not working",
+            "Buttons unresponsive",
+            "Door won't close properly",
+            "Strange noise",
+            "Trips the breaker",
+            "Food heats unevenly",
+        ],
+    },
+    {
+        "id": "dishwasher",
+        "label": "Dishwashers",
+        "short": "Dishwasher",
+        "icon": "dishwasher",
+        "tagline": "Drain, fill, cleaning",
+        "description": "Drain and fill faults, leaks, poor cleaning, and error codes.",
+        "prompt_hint": "Say what the display shows and whether water stays in the bottom after a cycle.",
+        "symptoms": [
+            "Won't start",
+            "Won't drain",
+            "Not cleaning well",
+            "Leaking water",
+            "Won't fill with water",
+            "Dishes stay wet",
+            "Strange noises",
+            "Error code on display",
+            "Door won't latch",
+            "Bad smell",
+        ],
+    },
+    {
+        "id": "smartwatch",
+        "label": "Smartwatches",
+        "short": "Watch",
+        "icon": "smartwatch",
+        "tagline": "Battery, sync, sensors",
+        "description": "Charging faults, battery wear, sync problems, and sensor errors.",
+        "prompt_hint": "Mention the model and whether it has been in water or dropped.",
+        "symptoms": [
+            "Won't turn on",
+            "Won't charge",
+            "Battery drains fast",
+            "Screen cracked",
+            "Not syncing with phone",
+            "Heart-rate sensor wrong",
+            "Buttons stuck",
+            "Water exposure",
+        ],
+    },
+    {
+        "id": "headphones",
+        "label": "Headphones & earbuds",
+        "short": "Audio",
+        "icon": "headphones",
+        "tagline": "Sound, pairing, charging",
+        "description": "One-sided audio, pairing failures, charging faults, and microphone issues.",
+        "prompt_hint": "Say whether it is wired or wireless, and which side or earbud has the problem.",
+        "symptoms": [
+            "One side is silent",
+            "No sound at all",
+            "Won't pair",
+            "Won't charge",
+            "Crackling or static",
+            "Microphone not working",
+            "Battery drains fast",
+            "Charging case won't charge",
+        ],
+    },
+    {
         "id": "other",
         "label": "Other devices",
         "short": "Other",
@@ -222,6 +410,23 @@ DEVICE_CATEGORIES = [
         ],
     },
 ]
+
+
+# Extra symptom choices for the original device types.
+_EXTRA_SYMPTOMS = {
+    "smartphone": ["Touch screen not responding", "Stuck on logo or boot loop", "Wi-Fi or Bluetooth problems", "Charging port loose"],
+    "laptop": ["Wi-Fi or Bluetooth problems", "No sound or microphone", "USB or port not working", "Hinge or casing damage"],
+    "desktop": ["Blue screen or crashes", "No sound", "Graphics card or display glitches", "Power supply clicking or burning smell"],
+    "washing_machine": ["Clothes stay too wet", "Bad smell", "Too much foam or suds", "Won't fill with water"],
+    "refrigerator": ["Door seal or gasket damaged", "Ice maker not working", "Light not working", "Too cold, food freezing"],
+    "air_conditioner": ["Ice on the unit", "Turns off by itself", "Outdoor unit not running", "Thermostat reads wrong"],
+    "television": ["No Wi-Fi or app problems", "Colours look wrong", "Backlight flickers or dim", "Black screen after a few seconds"],
+    "other": ["Smells like burning", "Battery or charging problem", "Buttons or controls not working"],
+}
+for _category in DEVICE_CATEGORIES:
+    _category["symptoms"] = _category["symptoms"] + [
+        item for item in _EXTRA_SYMPTOMS.get(_category["id"], []) if item not in _category["symptoms"]
+    ]
 
 CATEGORY_BY_ID = {item["id"]: item for item in DEVICE_CATEGORIES}
 

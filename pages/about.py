@@ -206,6 +206,59 @@ def _faq() -> None:
         )
 
 
+def _simple_intro() -> None:
+    steps = [
+        ("1", "Describe it", "Pick your device, say what is wrong, and add a photo if you like."),
+        ("2", "Get a plan", "FixMate lists the most likely causes and the safe things you can check yourself."),
+        ("3", "Ask more", "Chat with FixMate about your report if you want to understand it better."),
+    ]
+    cards = "".join(
+        f"""
+        <article class="fm-principle">
+            <span class="fm-principle-icon" style="font:800 1.3rem var(--font-display)">{num}</span>
+            <h3>{title}</h3>
+            <p>{copy}</p>
+        </article>
+        """
+        for num, title, copy in steps
+    )
+    html_block(
+        f"""
+        <section class="fm-about-section">
+            <div class="fm-section-head">
+                <span class="fm-eyebrow"><span class="fm-eyebrow-mark"></span>THE SIMPLE VERSION</span>
+                <div class="fm-section-title-row">
+                    <h2>What is FixMate?</h2>
+                    <p class="fm-section-copy">FixMate is a helper for broken gadgets. Tell it what is wrong with your phone, laptop or home appliance, and it explains what is probably causing the problem, what you can safely check yourself, and when to stop and call a professional.</p>
+                </div>
+            </div>
+            <div class="fm-principle-grid">{cards}</div>
+            <p class="fm-about-small" style="margin-top:14px">FixMate is a guide, not a repair shop. The AI can be wrong, so it shows how sure it is and warns you when something could be dangerous.</p>
+        </section>
+        """
+    )
+
+
+def _credits() -> None:
+    html_block(
+        """
+        <section style="margin:48px 0 8px;padding:34px 24px;text-align:center;background:#0b1450;border:2px solid #fff;border-top:6px solid #ff6a1a;border-radius:8px">
+            <p style="margin:0 0 22px;font:600 .8rem var(--font-mono);letter-spacing:.08em;color:#b4c2ff">MADE BY</p>
+            <div style="display:flex;justify-content:center;gap:56px;flex-wrap:wrap">
+                <div>
+                    <p style="margin:0;font:600 .8rem var(--font-mono);color:#ffe14a">DESIGN</p>
+                    <p style="margin:4px 0 0;font:800 1.7rem var(--font-display);color:#fff">Zaman Zaher</p>
+                </div>
+                <div>
+                    <p style="margin:0;font:600 .8rem var(--font-mono);color:#ffe14a">DEVELOPMENT</p>
+                    <p style="margin:4px 0 0;font:800 1.7rem var(--font-display);color:#fff">Maatin Amanj</p>
+                </div>
+            </div>
+        </section>
+        """
+    )
+
+
 def render() -> None:
     settings = get_ai_settings()
     page_header(
@@ -227,6 +280,7 @@ def render() -> None:
         </div>
         """
     )
+    _simple_intro()
     _safety_principles()
     _pipeline()
     _limits()
@@ -240,3 +294,4 @@ def render() -> None:
         </div>
         """
     )
+    _credits()

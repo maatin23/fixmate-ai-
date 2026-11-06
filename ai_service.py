@@ -57,6 +57,14 @@ def _get_client(settings: AISettings) -> OpenAI:
     return OpenAI(**kwargs)
 
 
+def _safe_detail(exc: Exception, settings: AISettings) -> str:
+    """Short provider message for troubleshooting, with the API key removed."""
+    text = " ".join(str(exc).split())
+    if settings.api_key:
+        text = text.replace(settings.api_key, "[hidden]")
+    return text[:350]
+
+
 def _map_error(exc: Exception, settings: AISettings) -> AIError:
     """Translate SDK exceptions into useful, non-secret error messages."""
     if isinstance(exc, AIError):
@@ -98,13 +106,14 @@ def _map_error(exc: Exception, settings: AISettings) -> AIError:
                 kind="invalid_image",
             )
         return AIError(
-            "The AI service rejected the request. Check the configured model and image settings, then try again.",
+            "The AI service rejected the request. Check the configured model and image settings, then try again. "
+            f"Details: {_safe_detail(exc, settings)}",
             kind="bad_request",
         )
     if isinstance(exc, APIStatusError):
         return AIError(
-            "The AI service returned an error. This is usually temporary. Retry in a moment; if it persists, "
-            "check the OpenAI service status.",
+            f"The AI service returned an error (code {getattr(exc, 'status_code', '?')}). "
+            f"Details: {_safe_detail(exc, settings)}",
             kind="service",
         )
     if isinstance(exc, OpenAIError):

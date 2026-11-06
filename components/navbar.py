@@ -18,6 +18,10 @@ def _on_nav_change() -> None:
         st.session_state.page = page
 
 
+def _toggle_theme() -> None:
+    st.session_state.theme = "light" if st.session_state.get("theme", "dark") == "dark" else "dark"
+
+
 def render_navbar() -> None:
     current_page = st.session_state.get("page", "home")
     expected_label = next((label for label in _NAV_ITEMS if LABEL_TO_PAGE.get(label) == current_page), "Home")
@@ -25,7 +29,7 @@ def render_navbar() -> None:
         st.session_state.nav_choice = expected_label
 
     with st.container(key="fm-navbar"):
-        brand_col, nav_col, cta_col = st.columns([2.9, 5.3, 2.1], vertical_alignment="center")
+        brand_col, nav_col, theme_col, cta_col = st.columns([2.6, 4.9, 1.5, 2.0], vertical_alignment="center")
         with brand_col:
             html_block(brand_lockup(38))
         with nav_col:
@@ -36,6 +40,15 @@ def render_navbar() -> None:
                 horizontal=True,
                 label_visibility="collapsed",
                 on_change=_on_nav_change,
+            )
+        with theme_col:
+            is_dark = st.session_state.get("theme", "dark") == "dark"
+            st.button(
+                "Light" if is_dark else "Dark",
+                key="nav_theme_toggle",
+                icon=":material/light_mode:" if is_dark else ":material/dark_mode:",
+                width="stretch",
+                on_click=_toggle_theme,
             )
         with cta_col:
             st.button(

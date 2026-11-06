@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import base64
+from functools import lru_cache
+from pathlib import Path
+
 _ICONS: dict[str, str] = {
     "smartphone": """
         <rect x="7" y="2.5" width="10" height="19" rx="2.6"/>
@@ -31,6 +35,31 @@ _ICONS: dict[str, str] = {
     "television": """
         <rect x="2.5" y="4" width="19" height="12.5" rx="2.2"/>
         <path d="M8 20.5h8M12 16.5v4"/>
+    """,
+    "tablet": """
+        <rect x="4" y="3" width="16" height="18" rx="2.4"/><path d="M10.5 18.2h3"/>
+    """,
+    "printer": """
+        <path d="M7 8V3.5h10V8"/><rect x="3.5" y="8" width="17" height="8.5" rx="2"/><rect x="7" y="13" width="10" height="7.5" rx="1"/>
+    """,
+    "game_console": """
+        <path d="M7.5 7h9a4.5 4.5 0 0 1 4.4 5.4l-.7 3.4a2.4 2.4 0 0 1-4 1.3L14 15.5h-4l-2.2 2.1a2.4 2.4 0 0 1-4-1.3l-.7-3.4A4.5 4.5 0 0 1 7.5 7Z"/>
+        <path d="M8 10v3M6.5 11.5h3M15.5 10.6h.01M17.5 12.4h.01"/>
+    """,
+    "router": """
+        <rect x="3" y="13" width="18" height="6.5" rx="2"/><path d="M7 16.2h.01M10.5 16.2h.01M9 10.5a4.2 4.2 0 0 1 6 0M6.2 7.6a8.2 8.2 0 0 1 11.6 0"/>
+    """,
+    "microwave": """
+        <rect x="2.5" y="5" width="19" height="14" rx="2.4"/><rect x="5.5" y="8" width="9" height="8" rx="1.2"/><path d="M17.5 8.5h1M17.5 12h1M17.5 15.5h1"/>
+    """,
+    "dishwasher": """
+        <rect x="4.5" y="2.8" width="15" height="18.4" rx="2.4"/><path d="M4.5 8h15M7.5 5.4h.01M10.5 5.4h.01"/><circle cx="12" cy="14.3" r="3.4"/>
+    """,
+    "smartwatch": """
+        <rect x="7" y="6.5" width="10" height="11" rx="3"/><path d="m9 6.5.8-3.5h4.4l.8 3.5M9 17.5l.8 3.5h4.4l.8-3.5M12 10v2.2l1.4 1"/>
+    """,
+    "headphones": """
+        <path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3.5" y="14" width="4" height="6" rx="1.6"/><rect x="16.5" y="14" width="4" height="6" rx="1.6"/>
     """,
     "plug": """
         <path d="M8.5 3v5M15.5 3v5M6 8h12v3.5a6 6 0 0 1-6 6v0a6 6 0 0 1-6-6V8ZM12 17.5V21"/>
@@ -157,12 +186,17 @@ def icon(name: str, size: int = 22, class_name: str = "") -> str:
     )
 
 
+@lru_cache(maxsize=1)
+def _logo_data_uri() -> str:
+    path = Path(__file__).resolve().parent.parent / "assets" / "logo_mark.png"
+    return "data:image/png;base64," + base64.b64encode(path.read_bytes()).decode("ascii")
+
+
 def logo_mark(size: int = 38) -> str:
     return (
-        f'<span class="fm-logo-tile" style="width:{size}px;height:{size}px">'
-        f'<svg width="{round(size * 0.62)}" height="{round(size * 0.62)}" viewBox="0 0 24 24" fill="none" '
-        f'stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" '
-        f'aria-hidden="true">{_LOGO_PULSE}</svg></span>'
+        f'<img src="{_logo_data_uri()}" alt="FixMate logo" width="{size}" height="{size}" '
+        f'style="display:block;width:{size}px;height:{size}px;border-radius:22%;'
+        f'box-shadow:0 0 0 1.5px rgba(255,255,255,.75)">'
     )
 
 

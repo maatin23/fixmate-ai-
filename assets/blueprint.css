@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@500;600&display=swap');
-:root{--ink:#0b1450;--blue:#1736d8;--bg:#1736d8;--bg-raised:#1230b8;--panel:rgba(255,255,255,.06);--panel-solid:#1230b8;--panel-bright:rgba(255,255,255,.1);
+:root{--ink:#0b1450;--blue:#1736d8;--bg:#071033;--bg-raised:#0c1a4a;--panel:rgba(255,255,255,.06);--panel-solid:#0c1a4a;--panel-bright:rgba(255,255,255,.1);
 --line:rgba(255,255,255,.28);--line-strong:rgba(255,255,255,.7);--line-cyan:#ff6a1a;--text:#f4f7ff;--text-soft:#dfe6ff;--muted:#b4c2ff;--muted-dim:#92a4f5;
 --cyan:#ffe14a;--cyan-soft:#fff0a0;--violet:#c9b8ff;--green:#7df0c4;--amber:#ffe14a;--red:#ff8a5c;--or:#ff6a1a;--yel:#ffe14a;
 --font-display:'Archivo','Segoe UI',sans-serif;--font-body:'Archivo','Segoe UI',sans-serif;--font-mono:'IBM Plex Mono',monospace;
@@ -8,8 +8,8 @@ html,body,.stApp,[data-testid=stAppViewContainer]{background:var(--bg)!important
 .stApp{font-family:var(--font-body)}
 h1,h2,h3,h4{font-family:var(--font-display)!important;color:#fff!important;font-stretch:112%;font-weight:800;letter-spacing:-.02em}
 .fm-bg::before{content:"";position:absolute;inset:0;opacity:1!important;background:
-linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px) 0 0/80px 80px,linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px) 0 0/80px 80px,
-linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/16px 16px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/16px 16px!important}
+linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px) 0 0/80px 80px,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px) 0 0/80px 80px,
+linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px) 0 0/16px 16px,linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px) 0 0/16px 16px!important}
 .fm-bg::after,.fm-bg-line,.fm-bg-blob{display:none!important}
 /* cards: line-drawn panels */
 .fm-step-card,.fm-feature-card,.fm-device-card,.fm-metric,.fm-dash-card,.fm-cause-card,.fm-report-hero,.fm-report-block,.fm-chat-card,.fm-about-panel,
@@ -41,14 +41,18 @@ font:700 1rem var(--font-body)!important;box-shadow:none!important;transition:.1
 .stButton>button:hover,.fm-btn:hover{background:#fff!important;color:var(--ink)!important;transform:translateY(-2px)}
 .stButton>button:hover *{color:var(--ink)!important}
 /* navbar */
-.st-key-fm-navbar{background:rgba(11,20,80,.55)!important;border:0!important;border-bottom:1.5px solid rgba(255,255,255,.6)!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:blur(6px)!important}
+.st-key-fm-navbar{background:rgba(7,16,51,.85)!important;border:0!important;border-bottom:1.5px solid rgba(255,255,255,.6)!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:blur(6px)!important}
 .st-key-fm-navbar [role=radiogroup] label{border-radius:3px!important;background:transparent!important;border:0!important;color:#fff!important;font-weight:700;padding:6px 12px!important}
 .st-key-fm-navbar [role=radiogroup] label:has(input:checked){background:#fff!important}
 .st-key-fm-navbar [role=radiogroup] label:has(input:checked) *{color:var(--ink)!important}
 .st-key-fm-navbar [role=radiogroup] label>div:first-child{display:none!important}
 /* inputs */
-[data-baseweb=input],[data-baseweb=textarea],[data-baseweb=select]>div{background:#fff!important;border:2px solid var(--ink)!important;border-radius:4px!important}
-[data-baseweb=input] input,[data-baseweb=textarea] textarea,[data-baseweb=select] *{color:var(--ink)!important}
+.stApp [data-baseweb=select]>div,.stApp [data-baseweb=input],.stApp [data-baseweb=textarea]{background:rgba(255,255,255,.07)!important;border:1.5px solid rgba(255,255,255,.4)!important;border-radius:10px!important}
+.stApp [data-baseweb=input] input,.stApp [data-baseweb=textarea] textarea,.stApp [data-baseweb=select] *{color:#fff!important;-webkit-text-fill-color:#fff}
+.stApp [data-baseweb=select]>div:focus-within,.stApp [data-baseweb=input]:focus-within,.stApp [data-baseweb=textarea]:focus-within{border-color:var(--or)!important}
+[data-baseweb=popover] ul,[data-baseweb=popover] [role=listbox]{background:#0c1a4a!important}
+[data-baseweb=popover] li{color:#fff!important}
+.stApp,[data-testid=stAppViewContainer],[data-testid=stMain],[data-testid=stHeader]{background:var(--bg)!important}
 .stTabs [data-baseweb=tab]{color:#fff;font-weight:700}.stTabs [aria-selected=true]{color:var(--yel)}
 .fm-chat-user-bubble{background:var(--or)!important;color:var(--ink)!important;border-radius:6px!important}.fm-chat-user-bubble *{color:var(--ink)!important}
 .fm-typing-dots span{background:var(--yel)!important}
@@ -66,7 +70,7 @@ font:700 1rem var(--font-body)!important;box-shadow:none!important;transition:.1
 @media(prefers-reduced-motion:reduce){.bp *{animation:none!important}.bp .dr{stroke-dashoffset:0}.bp .late{opacity:1}}
 .st-key-fm-footer .fm-footer{background:var(--ink)!important;border:0!important;border-radius:6px!important}
 .st-key-fm-footer .fm-footer *{color:#d5dcff!important}.st-key-fm-footer .fm-footer-label{color:var(--yel)!important;font-weight:800}
-.fm-loader-overlay{background:rgba(23,54,216,.9)!important}
+.fm-loader-overlay{background:rgba(7,16,51,.93)!important}
 .fm-loader-ring,.fm-loader-ring-a,.fm-loader-ring-b{border-color:var(--or) transparent #fff transparent!important}
 /* auto: old light-on-dark text -> ink */
 .fm-about-panel h3,
