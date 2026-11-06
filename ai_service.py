@@ -22,6 +22,7 @@ from openai import (
 )
 
 from config import AISettings, get_ai_settings
+from i18n import language_name
 from prompts import CHAT_SYSTEM_PROMPT, DIAGNOSIS_SYSTEM_PROMPT, VISION_SYSTEM_PROMPT
 
 
@@ -186,6 +187,42 @@ def _parse_json_object(content: str) -> dict:
     return payload
 
 
+_TRANSLATE_PROMPT = """You translate text for FixMate AI, a consumer repair-triage app, into {language}.
+The input is a JSON array of strings. Return ONLY a JSON object {{"translations": [...]}} with exactly the same
+number of items in the same order. Translate faithfully, plainly and calmly. Keep brand names, model names, error codes,
+numbers and units unchanged. Never add, merge, drop or explain items."""
+
+
+def translate_texts(texts: list[str], language: str, settings: AISettings | None = None) -> list[str]:
+    """Translate report text after the safety layer has already checked the English version."""
+    settings = settings or get_ai_settings()
+    client = _get_client(settings)
+    try:
+        completion = client.chat.completions.create(
+            model=settings.model,
+            messages=[
+                {"role": "system", "content": _TRANSLATE_PROMPT.format(language=language)},
+                {"role": "user", "content": json.dumps(texts, ensure_ascii=False)},
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.1,
+            max_tokens=settings.diagnosis_tokens,
+        )
+    except OpenAIError as exc:
+        raise _map_error(exc, settings) from exc
+    items = _parse_json_object(_extract_text(completion)).get("translations")
+    if not isinstance(items, list) or len(items) != len(texts) or not all(isinstance(i, str) for i in items):
+        raise AIError("The translation was incomplete.", kind="invalid_report")
+    return items
+
+
+def _language_note() -> str:
+    name = language_name()
+    if not name:
+        return ""
+    return f"\n\nLANGUAGE\nWrite your whole reply in {name}. Keep brand names, model names and error codes as written."
+
+
 def generate_diagnosis(user_context: str, settings: AISettings | None = None) -> dict:
     settings = settings or get_ai_settings()
     client = _get_client(settings)
@@ -265,7 +302,7 @@ def chat_reply(
     messages = [
         {
             "role": "system",
-            "content": f"{CHAT_SYSTEM_PROMPT}\n\nCURRENT DIAGNOSTIC CONTEXT\n{context_text}",
+            "content": f"{CHAT_SYSTEM_PROMPT}\n\nCURRENT DIAGNOSTIC CONTEXT\n{context_text}{_language_note()}",
         },
         *[
             {"role": item["role"], "content": item["content"]}

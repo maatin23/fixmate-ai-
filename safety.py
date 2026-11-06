@@ -79,6 +79,30 @@ _RULES: list[tuple[str, str, str, str, str, re.Pattern[str]]] = [
     ),
 ]
 
+# Arabic / Central Kurdish hazard words, so non-English descriptions still trigger the safety layer.
+_DIACRITICS = re.compile("[\u064b-\u065f\u0670\u0640]")
+_LETTERS = str.maketrans({"ي": "ی", "ى": "ی", "ك": "ک", "ة": "ه"})
+
+
+def _norm(text: str) -> str:
+    return _DIACRITICS.sub("", str(text)).translate(_LETTERS)
+
+
+_MULTILINGUAL = {
+    "battery_swelling": "انتفاخ|منتفخ|منتفخة|تضخم|ئاوسان|ئاوساو|ئاوسا",
+    "fire_smoke": "دخان|شرر|شرارة|حريق|حرائق|احتراق|يحترق|رائحة حرق|رائحة احتراق|ذاب|ذوبان|دووکەڵ|بریسکە|بروسکە|ئاگر|سووتان|سووتا|سوتا|توایەوە|توانەوە",
+    "mains_shock": "صعق|صدمة كهربائية|مكثف|جهد عالي|تيار عالي|اسلاك مكشوفة|أسلاك مكشوفة|کارەبای بەرز|کەپاسیتەر|وایەری ڕووت|کارەبا لێدان|کارەبا گرتن",
+    "refrigerant_gas": "فريون|تسرب غاز|رائحة غاز|أمونيا|أول أكسيد الكربون|فریۆن|لێکچوونی گاز|بۆنی گاز|ئەمۆنیا",
+    "liquid_electronics": "تسرب|سائل|بلل|مبلل|غرق|وقع في الماء|لێکچوون|شلە|تەڕ بووە|تەڕبوون|کەوتە ناو ئاو",
+}
+_RULES = [
+    (*rule[:5], re.compile(rule[5].pattern + "|" + _norm(_MULTILINGUAL[rule[0]]), re.IGNORECASE))
+    if rule[0] in _MULTILINGUAL
+    else rule
+    for rule in _RULES
+]
+
+
 _UNSAFE_PATTERNS = [
     re.compile(r"\b(?:discharge|probe|measure|test)\b[^.]{0,45}\bcapacitors?\b", re.IGNORECASE),
     re.compile(r"\b(?:work on|test|probe|touch)\b[^.]{0,35}\b(?:live|energized)\b", re.IGNORECASE),
@@ -97,7 +121,7 @@ _URGENCY_ORDER = {"routine": 0, "soon": 1, "urgent": 2}
 
 def scan_hazards(text: str, signs: Iterable[str] = (), category_id: str | None = None) -> list[Hazard]:
     """Return deterministic hazard findings from free text and selected signs."""
-    blob = " ".join([text or "", *[str(sign) for sign in signs]])
+    blob = _norm(" ".join([text or "", *[str(sign) for sign in signs]]))
     if category_id == "other":
         blob += " other device"
 

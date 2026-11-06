@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import streamlit as st
 
+from i18n import t
+
 from ai_service import AIError, chat_reply
 from components.cards import render_callout
 from components.icons import icon
@@ -114,7 +116,7 @@ def _context_header(diagnostic: dict | None, page_key: str, message_count: int) 
                     width="stretch",
                 )
             else:
-                st.button("Ask AI workspace", key=f"chat_open_{page_key}", on_click=go_chat, width="stretch")
+                st.button(t("Ask AI workspace"), key=f"chat_open_{page_key}", on_click=go_chat, width="stretch")
             st.button(
                 "Clear conversation",
                 key=f"chat_clear_{page_key}",
@@ -218,7 +220,7 @@ def render_chat(diagnostic: dict | None, *, page_key: str) -> None:
             prompt = st.text_area(
                 "Your question",
                 key=f"chat_input_{page_key}_{st.session_state.chat_nonce}",
-                placeholder="Ask a follow-up, request simpler wording, or describe what happened next…",
+                placeholder=t("Ask a follow-up, request simpler wording, or describe what happened next…"),
                 max_chars=1500,
                 height=104,
                 label_visibility="collapsed",

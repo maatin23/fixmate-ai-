@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import streamlit as st
 
+from i18n import translate_html
+
 
 def compact_html(markup: str) -> str:
     """Keep block HTML on flush-left lines so Markdown never treats it as code."""
@@ -12,4 +14,4 @@ def compact_html(markup: str) -> str:
 
 
 def html_block(markup: str) -> None:
-    st.markdown(compact_html(markup), unsafe_allow_html=True)
+    st.markdown(compact_html(translate_html(markup)), unsafe_allow_html=True)

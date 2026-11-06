@@ -22,6 +22,7 @@ LABEL_TO_PAGE = {label: page for page, label in PAGE_LABELS.items()}
 
 _DEFAULTS = {
     "theme": "dark",
+    "lang": "en",
     "page": "home",
     "nav_choice": "Home",
     "selected_device": None,

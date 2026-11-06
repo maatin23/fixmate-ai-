@@ -159,3 +159,8 @@ font:700 1rem var(--font-body)!important;box-shadow:none!important;transition:.1
 button[kind='secondary']:hover, [data-testid='stBaseButton-secondary']:hover,
 code,
 li[role='option']:hover, li[aria-selected='true']{color:var(--text-soft)!important}
+
+/* brand pills */
+.stApp [data-testid=stBaseButton-pills]{border:1.5px solid rgba(255,255,255,.4)!important;border-radius:999px!important;background:rgba(255,255,255,.05)!important;color:#fff!important;font-weight:600}
+.stApp [data-testid=stBaseButton-pills]:hover{border-color:var(--or)!important}
+.stApp [data-testid=stBaseButton-pillsActive]{background:var(--or)!important;border-color:var(--or)!important;color:#0b1450!important;font-weight:800}

@@ -428,6 +428,25 @@ for _category in DEVICE_CATEGORIES:
         item for item in _EXTRA_SYMPTOMS.get(_category["id"], []) if item not in _category["symptoms"]
     ]
 
+# Brand choices shown as one-tap options on the diagnosis form ("other" has none).
+BRANDS_BY_CATEGORY = {
+    "smartphone": ["Apple", "Samsung", "Xiaomi", "Huawei", "Oppo", "Vivo", "Honor", "Realme", "OnePlus", "Google Pixel", "Motorola", "Nokia", "Infinix", "Tecno", "Sony", "Asus"],
+    "laptop": ["Apple", "Dell", "HP", "Lenovo", "Asus", "Acer", "MSI", "Microsoft Surface", "Samsung", "Huawei", "Razer", "LG", "Toshiba"],
+    "desktop": ["Dell", "HP", "Lenovo", "Asus", "Acer", "MSI", "Apple", "Alienware", "Custom-built PC"],
+    "washing_machine": ["Samsung", "LG", "Bosch", "Siemens", "Whirlpool", "Beko", "Miele", "Electrolux", "Haier", "Hisense", "Panasonic", "Candy", "Indesit", "Ariston", "Midea"],
+    "refrigerator": ["Samsung", "LG", "Bosch", "Siemens", "Whirlpool", "Beko", "Haier", "Hisense", "Panasonic", "Electrolux", "Sharp", "Midea", "Hitachi", "Toshiba", "Smeg", "Daewoo"],
+    "air_conditioner": ["Gree", "Midea", "LG", "Samsung", "Daikin", "Carrier", "Haier", "Hisense", "Panasonic", "Mitsubishi", "Toshiba", "TCL", "General", "Fujitsu", "Hitachi", "York"],
+    "television": ["Samsung", "LG", "Sony", "TCL", "Hisense", "Xiaomi", "Philips", "Panasonic", "Sharp", "Toshiba", "Vizio", "Skyworth", "Haier", "Huawei"],
+    "tablet": ["Apple iPad", "Samsung", "Huawei", "Lenovo", "Xiaomi", "Amazon Fire", "Microsoft Surface", "Honor", "Realme", "Oppo"],
+    "printer": ["HP", "Canon", "Epson", "Brother", "Samsung", "Xerox", "Lexmark", "Ricoh", "Kyocera", "Konica Minolta", "Pantum", "OKI"],
+    "game_console": ["Sony PlayStation", "Microsoft Xbox", "Nintendo", "Valve Steam Deck", "Asus ROG Ally", "Meta Quest"],
+    "router": ["TP-Link", "Huawei", "Netgear", "D-Link", "Asus", "Xiaomi", "ZTE", "Linksys", "Tenda", "Mercusys", "Zyxel", "MikroTik", "Ubiquiti", "Cisco", "Nokia"],
+    "microwave": ["Samsung", "LG", "Panasonic", "Sharp", "Bosch", "Siemens", "Whirlpool", "Midea", "Toshiba", "Electrolux", "Daewoo", "Beko", "Hisense"],
+    "dishwasher": ["Bosch", "Siemens", "Samsung", "LG", "Whirlpool", "Beko", "Miele", "Electrolux", "AEG", "Haier", "Hisense", "Indesit", "Candy", "Midea"],
+    "smartwatch": ["Apple Watch", "Samsung Galaxy Watch", "Huawei", "Xiaomi", "Garmin", "Fitbit", "Amazfit", "Google Pixel Watch", "Honor", "Oppo", "Fossil"],
+    "headphones": ["Apple AirPods", "Samsung", "Sony", "JBL", "Bose", "Xiaomi", "Huawei", "Anker Soundcore", "Beats", "Sennheiser", "Oppo", "Realme", "Jabra", "Skullcandy"],
+}
+
 CATEGORY_BY_ID = {item["id"]: item for item in DEVICE_CATEGORIES}
 
 AGE_OPTIONS = ["Not sure", "Less than 1 year", "1–3 years", "4–6 years", "7–10 years", "More than 10 years"]

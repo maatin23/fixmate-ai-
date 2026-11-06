@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 
 import streamlit as st
 
+from i18n import t
+
 from ai_service import AIError, MISSING_KEY_MESSAGE
 from components.cards import (
     error_message_block,
@@ -21,6 +23,7 @@ from components.icons import icon
 from components.render import html_block
 from config import (
     AGE_OPTIONS,
+    BRANDS_BY_CATEGORY,
     CATEGORY_BY_ID,
     ONSET_OPTIONS,
     UNUSUAL_SIGNS,
@@ -106,7 +109,7 @@ def _intake_header(category: dict) -> None:
             """
         )
     with right:
-        st.button("Change device", key="diag_change_device", on_click=clear_device_selection, width="stretch")
+        st.button(t("Change device"), key="diag_change_device", on_click=clear_device_selection, width="stretch")
 
 
 def _validate(description: str, manufacturer: str, model: str) -> str | None:
@@ -182,63 +185,76 @@ def _intake_form(category: dict) -> None:
     left, right = st.columns([1.72, 0.82], gap="large")
 
     with left:
+        brands = BRANDS_BY_CATEGORY.get(category["id"], [])
+        picked_brand = ""
+        if brands:
+            html_block('<div class="fm-form-section-label">Pick the brand</div>')
+            picked_brand = st.pills(
+                "Brand",
+                brands,
+                selection_mode="single",
+                key=f"brand_pick_{form_key}",
+                label_visibility="collapsed",
+            ) or ""
         with st.form(form_key, clear_on_submit=False):
             html_block('<div class="fm-form-section-label">Device identity</div>')
             id_a, id_b = st.columns(2, gap="medium")
             with id_a:
                 manufacturer = st.text_input(
-                    "Manufacturer",
+                    t("Brand not listed? Type it here") if brands else t("Brand"),
                     key=f"manufacturer_{form_key}",
-                    placeholder="e.g. Samsung, Dell, LG",
+                    placeholder=t("Optional, only if your brand is not above") if brands else "e.g. Philips, Dyson",
                     max_chars=80,
                 )
             with id_b:
                 model = st.text_input(
-                    "Model",
+                    t("Model"),
                     key=f"model_{form_key}",
-                    placeholder="e.g. Galaxy S22, XPS 13",
+                    placeholder=t("e.g. Galaxy S22, XPS 13"),
                     max_chars=80,
                 )
 
             meta_a, meta_b, meta_c = st.columns([1, 1, 1], gap="medium")
             with meta_a:
-                age_range = st.selectbox("Approximate age", AGE_OPTIONS, key=f"age_{form_key}")
+                age_range = st.selectbox(t("Approximate age"), AGE_OPTIONS, format_func=t, key=f"age_{form_key}")
             with meta_b:
-                onset = st.selectbox("When it started", ONSET_OPTIONS, key=f"onset_{form_key}")
+                onset = st.selectbox(t("When it started"), ONSET_OPTIONS, format_func=t, key=f"onset_{form_key}")
             with meta_c:
                 error_code = st.text_input(
-                    "Error code / display text",
+                    t("Error code / display text"),
                     key=f"error_{form_key}",
-                    placeholder="Optional",
+                    placeholder=t("Optional"),
                     max_chars=60,
                 )
 
             st.divider()
             html_block('<div class="fm-form-section-label">Observed symptoms</div>')
             symptoms = st.multiselect(
-                "What is the device doing?",
+                t("What is the device doing?"),
                 options=category["symptoms"],
                 max_selections=6,
                 accept_new_options=True,
-                placeholder="Select one or more symptoms (up to 6)",
+                placeholder=t("Select one or more symptoms (up to 6)"),
                 key=f"symptoms_{form_key}",
                 help="Choose the closest matches. You can type a custom symptom if it is not listed.",
-            )
+            format_func=t,
+        )
             signs = st.multiselect(
-                "Any unusual signs?",
+                t("Any unusual signs?"),
                 options=UNUSUAL_SIGNS,
                 default=[],
                 max_selections=5,
                 accept_new_options=True,
-                placeholder="Select anything you have noticed",
+                placeholder=t("Select anything you have noticed"),
                 key=f"signs_{form_key}",
                 help="These selections are checked by the deterministic safety layer before the report is shown.",
-            )
+            format_func=t,
+        )
 
             st.divider()
             html_block('<div class="fm-form-section-label">Your description</div>')
             description = st.text_area(
-                "Describe the fault",
+                t("Describe the fault"),
                 key=f"description_{form_key}",
                 placeholder=(
                     f"What changed? When did it start? What happens when you try to use it? "
@@ -259,12 +275,13 @@ def _intake_form(category: dict) -> None:
             )
 
             submitted = st.form_submit_button(
-                "Generate diagnostic report",
+                t("Generate diagnostic report"),
                 type="primary",
                 width="stretch",
             )
 
         if submitted:
+            manufacturer = manufacturer.strip() or picked_brand
             error = _validate(description, manufacturer, model)
             if error:
                 st.session_state.diagnosis_error = error

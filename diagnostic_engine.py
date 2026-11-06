@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import copy
 import time
 from dataclasses import asdict
 from typing import Any
 
-from ai_service import AIError, generate_diagnosis
+from ai_service import AIError, generate_diagnosis, translate_texts
 from config import CATEGORY_BY_ID
+from i18n import language_name
 from safety import Hazard, apply_guardrails, prompt_directive, scan_hazards
 
 _SEVERITIES = {"low", "moderate", "high", "critical"}
@@ -219,6 +221,38 @@ SAFETY DIRECTIVE FROM THE DETERMINISTIC SAFETY LAYER
 """
 
 
+_TEXT_KEYS = {
+    "summary", "title", "explanation", "quick_test", "detail", "expected_result", "risk_note",
+    "name", "purpose", "estimated_time", "reason", "uncertainty", "when_to_stop", "prevention",
+}
+
+
+def translate_report(report: dict, language: str) -> dict:
+    """Translate the readable text of an already safety-checked report (keys and levels stay English)."""
+    translated = copy.deepcopy(report)
+    slots: list[tuple] = []
+
+    def walk(node) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                if key in _TEXT_KEYS and isinstance(value, str) and value.strip():
+                    slots.append((node, key))
+                elif key in _TEXT_KEYS and isinstance(value, list):
+                    slots.extend((value, i) for i, item in enumerate(value) if isinstance(item, str) and item.strip())
+                else:
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(translated)
+    if not slots:
+        return report
+    for (container, key), text in zip(slots, translate_texts([c[k] for c, k in slots], language)):
+        container[key] = text
+    return translated
+
+
 def run_diagnosis(inputs: dict) -> dict:
     started = time.perf_counter()
     text_blob = " ".join(
@@ -233,6 +267,13 @@ def run_diagnosis(inputs: dict) -> dict:
     raw = generate_diagnosis(_user_context(inputs, hazards))
     report = normalise_report(raw)
     guarded, notices, withheld = apply_guardrails(report, hazards)
+
+    language = language_name()
+    if language:
+        try:
+            guarded = translate_report(guarded, language)
+        except Exception:
+            pass  # keep the English report if translation fails
 
     return {
         "input": inputs,

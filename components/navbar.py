@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import streamlit as st
 
+from i18n import LANGS, t
+
 from components.icons import brand_lockup, icon
 from components.render import html_block
 from state import LABEL_TO_PAGE, begin_diagnosis
@@ -29,7 +31,7 @@ def render_navbar() -> None:
         st.session_state.nav_choice = expected_label
 
     with st.container(key="fm-navbar"):
-        brand_col, nav_col, theme_col, cta_col = st.columns([2.6, 4.9, 1.5, 2.0], vertical_alignment="center")
+        brand_col, nav_col, lang_col, theme_col, cta_col = st.columns([2.3, 4.3, 1.5, 1.4, 1.9], vertical_alignment="center")
         with brand_col:
             html_block(brand_lockup(38))
         with nav_col:
@@ -40,11 +42,14 @@ def render_navbar() -> None:
                 horizontal=True,
                 label_visibility="collapsed",
                 on_change=_on_nav_change,
-            )
+            format_func=t,
+        )
+        with lang_col:
+            st.selectbox("Language", list(LANGS), format_func=LANGS.get, key="lang", label_visibility="collapsed")
         with theme_col:
             is_dark = st.session_state.get("theme", "dark") == "dark"
             st.button(
-                "Light" if is_dark else "Dark",
+                t("Light" if is_dark else "Dark"),
                 key="nav_theme_toggle",
                 icon=":material/light_mode:" if is_dark else ":material/dark_mode:",
                 width="stretch",
@@ -52,7 +57,7 @@ def render_navbar() -> None:
             )
         with cta_col:
             st.button(
-                "Start diagnosis",
+                t("Start diagnosis"),
                 key="nav_start_diagnosis",
                 type="primary",
                 width="stretch",

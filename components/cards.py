@@ -7,6 +7,8 @@ from typing import Callable
 
 import streamlit as st
 
+from i18n import t
+
 from components.icons import icon
 from components.render import compact_html, html_block
 from config import DEVICE_CATEGORIES
@@ -75,7 +77,7 @@ def render_device_grid(
                 with st.container(key=f"fm-cat-{key_prefix}-{category['id']}"):
                     html_block(device_card_header(category, index))
                     st.button(
-                        f"{button_label} →",
+                        f"{t(button_label)} →",
                         key=f"{key_prefix}_device_{category['id']}",
                         width="stretch",
                         on_click=on_select,
