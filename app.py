@@ -18,7 +18,7 @@ st.set_page_config(
 
 from components.navbar import render_footer, render_navbar  # noqa: E402
 from database import init_db  # noqa: E402
-from pages import about, chat, dashboard, diagnosis, history, home  # noqa: E402
+from pages import about, chat, dashboard, diagnosis, history, home, language  # noqa: E402
 from state import clear_flash  # noqa: E402
 
 _PAGE_RENDERERS = {
@@ -50,6 +50,10 @@ def main() -> None:
     inject_styles()
     init_state()
     init_db()
+
+    if not st.session_state.get("lang_chosen"):
+        language.render()
+        return
 
     render_navbar()
     _render_flash()

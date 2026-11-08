@@ -164,3 +164,11 @@ li[role='option']:hover, li[aria-selected='true']{color:var(--text-soft)!importa
 .stApp [data-testid=stBaseButton-pills]{border:1.5px solid rgba(255,255,255,.4)!important;border-radius:999px!important;background:rgba(255,255,255,.05)!important;color:#fff!important;font-weight:600}
 .stApp [data-testid=stBaseButton-pills]:hover{border-color:var(--or)!important}
 .stApp [data-testid=stBaseButton-pillsActive]{background:var(--or)!important;border-color:var(--or)!important;color:#0b1450!important;font-weight:800}
+
+/* language welcome page */
+.st-key-lang-splash{max-width:780px;margin:10vh auto 0;text-align:center}
+.st-key-lang-splash h1{font-size:clamp(2.4rem,6vw,4rem)!important;margin:18px 0 8px}
+.fm-lang-head img{margin:0 auto}
+.fm-lang-sub{color:var(--muted);font-size:1.05rem;margin:0 0 34px}
+.st-key-lang-splash .stButton>button{min-height:88px;font-size:1.4rem!important;border-radius:14px!important}
+.st-key-lang-splash .stButton>button:hover{border-color:var(--or)!important}
