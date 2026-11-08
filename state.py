@@ -24,6 +24,8 @@ _DEFAULTS = {
     "theme": "dark",
     "lang": "en",
     "lang_chosen": False,
+    "lang_picked": False,
+    "view": None,
     "page": "home",
     "nav_choice": "Home",
     "selected_device": None,

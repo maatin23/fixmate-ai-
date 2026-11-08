@@ -347,7 +347,8 @@ AR = {
 "Keep the device unplugged and switched off. Do not charge it. Have it assessed by a technician before applying power.": "أبقِ الجهاز مفصولاً ومطفأً ولا تشحنه. دع فنياً يقيّمه قبل تشغيله.",
 "Find a repair shop near me": "ابحث عن محل تصليح قريب مني",
 "Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device.": "يفتح خرائط Google في تبويب جديد. اطّلع على التقييمات واسأل عن السعر قبل تسليم جهازك.",
-"A professional repair is recommended for this problem.": "يُنصح بإصلاح احترافي لهذه المشكلة."
+"A professional repair is recommended for this problem.": "يُنصح بإصلاح احترافي لهذه المشكلة.",
+"Change language / device": "تغيير اللغة / الجهاز"
 }
 
 CKB = {
@@ -697,5 +698,6 @@ CKB = {
 "Keep the device unplugged and switched off. Do not charge it. Have it assessed by a technician before applying power.": "ئامێرەکە دابڕاو و کوژاوە بهێڵەرەوە و شەحنی مەکە. پێش کارپێکردن با تەکنیکار هەڵیبسەنگێنێت.",
 "Find a repair shop near me": "دووکانی چاککردنەوەی نزیک خۆم بدۆزەرەوە",
 "Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device.": "گووگڵ مەپس لە تابێکی نوێدا دەکرێتەوە. پێش ڕادەستکردنی ئامێرەکەت هەڵسەنگاندنەکان ببینە و نرخ بپرسە.",
-"A professional repair is recommended for this problem.": "بۆ ئەم کێشەیە چاککردنەوەی پسپۆڕ پێشنیار دەکرێت."
+"A professional repair is recommended for this problem.": "بۆ ئەم کێشەیە چاککردنەوەی پسپۆڕ پێشنیار دەکرێت.",
+"Change language / device": "گۆڕینی زمان / ئامێر"
 }

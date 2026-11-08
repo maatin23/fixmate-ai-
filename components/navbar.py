@@ -66,6 +66,10 @@ def render_navbar() -> None:
             )
 
 
+def _reopen_welcome() -> None:
+    st.session_state.lang_chosen = False
+
+
 def render_footer() -> None:
     with st.container(key="fm-footer"):
         html_block(
@@ -99,3 +103,4 @@ def render_footer() -> None:
                 </div>
             </footer>
             """)
+        st.button(t("Change language / device"), key="footer_change_welcome", on_click=_reopen_welcome)

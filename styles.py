@@ -5,6 +5,7 @@ from __future__ import annotations
 import streamlit as st
 
 from i18n import is_rtl
+from phone_css import PHONE_FRAME, PHONE_RULES
 
 from config import ASSETS_DIR
 
@@ -58,3 +59,8 @@ def inject_styles() -> None:
         st.markdown(_LIGHT_MODE, unsafe_allow_html=True)
     if is_rtl():
         st.markdown(_RTL_MODE, unsafe_allow_html=True)
+    view = st.session_state.get("view")
+    if view == "phone":
+        st.markdown(f"<style>{PHONE_RULES} {PHONE_FRAME}</style>", unsafe_allow_html=True)
+    elif view != "laptop":
+        st.markdown(f"<style>@media (max-width: 768px) {{ {PHONE_RULES} }}</style>", unsafe_allow_html=True)
