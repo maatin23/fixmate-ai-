@@ -172,3 +172,9 @@ li[role='option']:hover, li[aria-selected='true']{color:var(--text-soft)!importa
 .fm-lang-sub{color:var(--muted);font-size:1.05rem;margin:0 0 34px}
 .st-key-lang-splash .stButton>button{min-height:88px;font-size:1.4rem!important;border-radius:14px!important}
 .st-key-lang-splash .stButton>button:hover{border-color:var(--or)!important}
+
+/* repair shop button */
+.st-key-fm-repair-shop{margin-top:22px}
+.st-key-fm-repair-shop a{background:var(--or)!important;border:2px solid var(--or)!important;border-radius:14px!important;min-height:56px;font-weight:800!important}
+.st-key-fm-repair-shop a, .st-key-fm-repair-shop a *{color:#0b1450!important}
+.st-key-fm-repair-shop a:hover{filter:brightness(1.08);transform:translateY(-2px)}

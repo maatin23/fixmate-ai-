@@ -5,7 +5,12 @@ from __future__ import annotations
 from typing import Any
 
 from components.icons import icon
+from urllib.parse import quote_plus
+
+import streamlit as st
+
 from components.render import html_block
+from i18n import t
 from utils import escape, format_timestamp, severity_tone, title_case
 
 _CONFIDENCE_PCT = {"high": 82, "medium": 56, "low": 30}
@@ -252,6 +257,48 @@ def _prevention(report: dict) -> str:
     )
 
 
+_REPAIR_SEARCH_TERMS = {
+    "smartphone": "phone repair",
+    "laptop": "laptop repair",
+    "desktop": "computer repair",
+    "washing_machine": "washing machine repair",
+    "refrigerator": "refrigerator repair",
+    "air_conditioner": "air conditioner repair",
+    "television": "TV repair",
+    "tablet": "tablet repair",
+    "printer": "printer repair",
+    "game_console": "game console repair",
+    "router": "router repair",
+    "microwave": "microwave repair",
+    "dishwasher": "dishwasher repair",
+    "smartwatch": "smartwatch repair",
+    "headphones": "headphone repair",
+}
+
+
+def _repair_shop_url(inputs: dict) -> str:
+    term = _REPAIR_SEARCH_TERMS.get(inputs.get("category", ""), "electronics repair")
+    brand = str(inputs.get("manufacturer") or "").strip()
+    if brand.lower().startswith("custom") or len(brand) > 30:
+        brand = ""
+    query = f"{brand} {term} near me".strip()
+    return "https://www.google.com/maps/search/?api=1&query=" + quote_plus(query)
+
+
+def _repair_shop_button(report: dict, inputs: dict) -> None:
+    """Link to a Google Maps search for repair shops. Nothing is stored or sent from the app."""
+    with st.container(key="fm-repair-shop"):
+        if (report.get("professional_repair") or {}).get("recommended"):
+            st.markdown(f"**{t('A professional repair is recommended for this problem.')}**")
+        st.link_button(
+            t("Find a repair shop near me"),
+            _repair_shop_url(inputs),
+            icon=":material/location_on:",
+            width="stretch",
+        )
+        st.caption(t("Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device."))
+
+
 def render_report(diagnostic: dict) -> None:
     report = diagnostic.get("report") or {}
     inputs = diagnostic.get("input") or {}
@@ -377,6 +424,7 @@ def render_report(diagnostic: dict) -> None:
         + f'<div class="fm-report-disclaimer">{icon("info", 14)} <span>This report is AI-generated advisory guidance based only on the details and images you supplied. It is not a confirmed diagnosis and does not replace an in-person inspection.</span></div>'
         + "</div>"
     )
+    _repair_shop_button(report, inputs)
 
 
 def _severity_tag(value: str) -> str:

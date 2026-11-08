@@ -344,7 +344,10 @@ AR = {
 "Do not puncture, open, charge or vent the system. Ventilate the area, avoid flames and switches, and contact a licensed technician.": "لا تثقب النظام ولا تفتحه ولا تشحنه ولا تُفرغه. هوِّ المكان وتجنب اللهب والمفاتيح الكهربائية واتصل بفني مرخّص.",
 "Liquid near electronics": "سائل قرب الإلكترونيات",
 "Liquid inside an electronic device can cause corrosion or a short circuit, even after it appears dry.": "السائل داخل الجهاز الإلكتروني قد يسبب التآكل أو ماساً كهربائياً حتى بعد أن يبدو جافاً.",
-"Keep the device unplugged and switched off. Do not charge it. Have it assessed by a technician before applying power.": "أبقِ الجهاز مفصولاً ومطفأً ولا تشحنه. دع فنياً يقيّمه قبل تشغيله."
+"Keep the device unplugged and switched off. Do not charge it. Have it assessed by a technician before applying power.": "أبقِ الجهاز مفصولاً ومطفأً ولا تشحنه. دع فنياً يقيّمه قبل تشغيله.",
+"Find a repair shop near me": "ابحث عن محل تصليح قريب مني",
+"Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device.": "يفتح خرائط Google في تبويب جديد. اطّلع على التقييمات واسأل عن السعر قبل تسليم جهازك.",
+"A professional repair is recommended for this problem.": "يُنصح بإصلاح احترافي لهذه المشكلة."
 }
 
 CKB = {
@@ -691,5 +694,8 @@ CKB = {
 "Do not puncture, open, charge or vent the system. Ventilate the area, avoid flames and switches, and contact a licensed technician.": "سیستەمەکە مەکونکە و مەیکەرەوە و پڕی مەکەرەوە و بەتاڵی مەکە. شوێنەکە هەوا بدە و لە ئاگر و سویچ دوور بکەوە و پەیوەندی بە تەکنیکاری مۆڵەتدار بکە.",
 "Liquid near electronics": "شلە نزیک ئامێری ئەلیکترۆنی",
 "Liquid inside an electronic device can cause corrosion or a short circuit, even after it appears dry.": "شلە لە ناو ئامێری ئەلیکترۆنی دەتوانێت هۆی زەنگاربوون یان کورتە کارەبا بێت تەنانەت دوای وشکبوونەوەش.",
-"Keep the device unplugged and switched off. Do not charge it. Have it assessed by a technician before applying power.": "ئامێرەکە دابڕاو و کوژاوە بهێڵەرەوە و شەحنی مەکە. پێش کارپێکردن با تەکنیکار هەڵیبسەنگێنێت."
+"Keep the device unplugged and switched off. Do not charge it. Have it assessed by a technician before applying power.": "ئامێرەکە دابڕاو و کوژاوە بهێڵەرەوە و شەحنی مەکە. پێش کارپێکردن با تەکنیکار هەڵیبسەنگێنێت.",
+"Find a repair shop near me": "دووکانی چاککردنەوەی نزیک خۆم بدۆزەرەوە",
+"Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device.": "گووگڵ مەپس لە تابێکی نوێدا دەکرێتەوە. پێش ڕادەستکردنی ئامێرەکەت هەڵسەنگاندنەکان ببینە و نرخ بپرسە.",
+"A professional repair is recommended for this problem.": "بۆ ئەم کێشەیە چاککردنەوەی پسپۆڕ پێشنیار دەکرێت."
 }
