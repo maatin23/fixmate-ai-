@@ -178,3 +178,49 @@ li[role='option']:hover, li[aria-selected='true']{color:var(--text-soft)!importa
 .st-key-fm-repair-shop a{background:var(--or)!important;border:2px solid var(--or)!important;border-radius:14px!important;min-height:56px;font-weight:800!important}
 .st-key-fm-repair-shop a, .st-key-fm-repair-shop a *{color:#0b1450!important}
 .st-key-fm-repair-shop a:hover{filter:brightness(1.08);transform:translateY(-2px)}
+
+/* ===== Phone layout (screens up to 768px wide). The laptop layout is not touched. ===== */
+@media (max-width: 768px) {
+  html, body, .stApp { overflow-x: hidden; }
+  .block-container, [data-testid="stMainBlockContainer"] { padding: 0.8rem 0.85rem 3rem !important; max-width: 100% !important; }
+
+  /* top menu: logo + language + theme on one row, page tabs scroll sideways below */
+  .st-key-fm-navbar { padding: 8px 10px !important; }
+  .st-key-fm-navbar [data-testid="stHorizontalBlock"] { flex-wrap: wrap !important; gap: 8px !important; align-items: center !important; }
+  .st-key-fm-navbar [data-testid="stColumn"] { min-width: 0 !important; width: auto !important; }
+  .st-key-fm-navbar [data-testid="stColumn"]:nth-child(1) { order: 1; flex: 1 1 auto !important; }
+  .st-key-fm-navbar [data-testid="stColumn"]:nth-child(3) { order: 2; flex: 0 0 112px !important; }
+  .st-key-fm-navbar [data-testid="stColumn"]:nth-child(4) { order: 3; flex: 0 0 98px !important; }
+  .st-key-fm-navbar [data-testid="stColumn"]:nth-child(2) { order: 4; flex: 1 1 100% !important; min-width: 100% !important; overflow-x: auto; }
+  .st-key-fm-navbar [data-testid="stColumn"]:nth-child(5) { display: none !important; }
+  .st-key-fm-navbar [role="radiogroup"] { flex-wrap: nowrap !important; overflow-x: auto; gap: 4px !important; padding-bottom: 2px; }
+  .st-key-fm-navbar [role="radiogroup"] label { white-space: nowrap; flex: 0 0 auto; }
+
+  /* device cards: two per row instead of one long list */
+  [data-testid="stHorizontalBlock"]:has([class*="st-key-fm-cat-"]) { flex-wrap: wrap !important; gap: 10px !important; }
+  [data-testid="stHorizontalBlock"]:has([class*="st-key-fm-cat-"]) > [data-testid="stColumn"] {
+    flex: 1 1 calc(50% - 6px) !important; min-width: calc(50% - 6px) !important; width: calc(50% - 6px) !important;
+  }
+  .fm-device-card { padding: 14px !important; }
+
+  /* text sizes and spacing */
+  .fm-hero h1 { font-size: 2.3rem !important; line-height: 1.06 !important; }
+  .fm-hero-sub { font-size: 1rem !important; }
+  .fm-hero-assurance { flex-wrap: wrap; gap: 8px; }
+  .stApp h2 { font-size: 1.65rem !important; }
+  .fm-section-title-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+  .fm-ticker { margin: 22px -0.85rem !important; padding: 10px 0 !important; }
+  .fm-ticker span { font-size: 0.95rem !important; }
+  .bp { max-height: 340px; }
+  .bp-stage { padding: 6px; }
+
+  /* easier to tap, and no zoom-in when typing on iPhone */
+  .stButton > button, .stFormSubmitButton > button, .st-key-fm-repair-shop a { min-height: 48px !important; }
+  .stApp input, .stApp textarea, .stApp [data-baseweb="select"] * { font-size: 16px !important; }
+  .st-key-lang-splash { margin-top: 6vh; }
+  .st-key-lang-splash .stButton > button { min-height: 68px; font-size: 1.2rem !important; }
+  .st-key-fm-footer .fm-footer { padding: 22px 16px !important; }
+
+  /* long words never push the page sideways */
+  .stApp [class*="fm-"] { overflow-wrap: anywhere; }
+}
