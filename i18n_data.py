@@ -348,7 +348,12 @@ AR = {
 "Find a repair shop near me": "ابحث عن محل تصليح قريب مني",
 "Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device.": "يفتح خرائط Google في تبويب جديد. اطّلع على التقييمات واسأل عن السعر قبل تسليم جهازك.",
 "A professional repair is recommended for this problem.": "يُنصح بإصلاح احترافي لهذه المشكلة.",
-"Change language / device": "تغيير اللغة / الجهاز"
+"Change language / device": "تغيير اللغة / الجهاز",
+"Describe the fault (optional)": "صف العطل (اختياري)",
+"Pick at least one symptom or describe the fault.": "اختر عَرَضاً واحداً على الأقل أو صف العطل.",
+"Pick the model": "اختر الطراز",
+"Select your model": "اختر طراز جهازك",
+"Model not listed? Type it here": "الطراز غير موجود؟ اكتبه هنا"
 }
 
 CKB = {
@@ -699,5 +704,10 @@ CKB = {
 "Find a repair shop near me": "دووکانی چاککردنەوەی نزیک خۆم بدۆزەرەوە",
 "Opens Google Maps in a new tab. Always check reviews and ask for a price before you hand over your device.": "گووگڵ مەپس لە تابێکی نوێدا دەکرێتەوە. پێش ڕادەستکردنی ئامێرەکەت هەڵسەنگاندنەکان ببینە و نرخ بپرسە.",
 "A professional repair is recommended for this problem.": "بۆ ئەم کێشەیە چاککردنەوەی پسپۆڕ پێشنیار دەکرێت.",
-"Change language / device": "گۆڕینی زمان / ئامێر"
+"Change language / device": "گۆڕینی زمان / ئامێر",
+"Describe the fault (optional)": "کێشەکە وەسف بکە (ئارەزوومەندانە)",
+"Pick at least one symptom or describe the fault.": "لانیکەم یەک نیشانە هەڵبژێرە یان کێشەکە وەسف بکە.",
+"Pick the model": "مۆدێلەکە هەڵبژێرە",
+"Select your model": "مۆدێلی ئامێرەکەت هەڵبژێرە",
+"Model not listed? Type it here": "مۆدێلەکەت نییە؟ لێرە بینووسە"
 }

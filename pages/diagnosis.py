@@ -24,6 +24,7 @@ from components.render import html_block
 from config import (
     AGE_OPTIONS,
     BRANDS_BY_CATEGORY,
+    MODELS_BY_BRAND,
     CATEGORY_BY_ID,
     ONSET_OPTIONS,
     UNUSUAL_SIGNS,
@@ -112,9 +113,9 @@ def _intake_header(category: dict) -> None:
         st.button(t("Change device"), key="diag_change_device", on_click=clear_device_selection, width="stretch")
 
 
-def _validate(description: str, manufacturer: str, model: str) -> str | None:
-    if len(description.strip()) < 20:
-        return "Add at least a couple of sentences describing the fault (20 characters minimum)."
+def _validate(description: str, symptoms: list, manufacturer: str, model: str) -> str | None:
+    if not description.strip() and not symptoms:
+        return t("Pick at least one symptom or describe the fault.")
     if len(manufacturer) > 80 or len(model) > 80:
         return "Manufacturer and model must each be 80 characters or fewer."
     return None
@@ -196,6 +197,18 @@ def _intake_form(category: dict) -> None:
                 key=f"brand_pick_{form_key}",
                 label_visibility="collapsed",
             ) or ""
+        models = MODELS_BY_BRAND.get(category["id"], {}).get(picked_brand, [])
+        picked_model = ""
+        if models:
+            html_block('<div class="fm-form-section-label">Pick the model</div>')
+            picked_model = st.selectbox(
+                "Model",
+                models,
+                index=None,
+                placeholder=t("Select your model"),
+                key=f"model_pick_{form_key}_{picked_brand}",
+                label_visibility="collapsed",
+            ) or ""
         with st.form(form_key, clear_on_submit=False):
             html_block('<div class="fm-form-section-label">Device identity</div>')
             id_a, id_b = st.columns(2, gap="medium")
@@ -208,7 +221,7 @@ def _intake_form(category: dict) -> None:
                 )
             with id_b:
                 model = st.text_input(
-                    t("Model"),
+                    t("Model not listed? Type it here") if models else t("Model"),
                     key=f"model_{form_key}",
                     placeholder=t("e.g. Galaxy S22, XPS 13"),
                     max_chars=80,
@@ -254,7 +267,7 @@ def _intake_form(category: dict) -> None:
             st.divider()
             html_block('<div class="fm-form-section-label">Your description</div>')
             description = st.text_area(
-                t("Describe the fault"),
+                t("Describe the fault (optional)"),
                 key=f"description_{form_key}",
                 placeholder=(
                     f"What changed? When did it start? What happens when you try to use it? "
@@ -282,7 +295,8 @@ def _intake_form(category: dict) -> None:
 
         if submitted:
             manufacturer = manufacturer.strip() or picked_brand
-            error = _validate(description, manufacturer, model)
+            model = model.strip() or picked_model
+            error = _validate(description, list(symptoms), manufacturer, model)
             if error:
                 st.session_state.diagnosis_error = error
             elif not settings.configured:

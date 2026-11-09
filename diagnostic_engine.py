@@ -213,7 +213,7 @@ Error code / display text: {inputs.get("error_code") or "None provided"}
 
 USER DESCRIPTION
 \"\"\"
-{inputs.get("description", "")}
+{inputs.get("description") or "(No written description. Rely on the selected symptoms and signs.)"}
 \"\"\"
 
 SAFETY DIRECTIVE FROM THE DETERMINISTIC SAFETY LAYER
