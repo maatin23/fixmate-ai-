@@ -908,6 +908,10 @@ MODELS_BY_BRAND = {
     },
 }
 
+from models_data import MORE_MODELS  # noqa: E402
+
+MODELS_BY_BRAND.update(MORE_MODELS)
+
 CATEGORY_BY_ID = {item["id"]: item for item in DEVICE_CATEGORIES}
 
 AGE_OPTIONS = ["Not sure", "Less than 1 year", "1–3 years", "4–6 years", "7–10 years", "More than 10 years"]

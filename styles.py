@@ -10,7 +10,7 @@ from phone_css import PHONE_FRAME, PHONE_RULES
 from config import ASSETS_DIR
 
 
-_STYLESHEETS = ("styles.css", "workspace.css", "app-pages.css", "blueprint.css")
+_STYLESHEETS = ("styles.css", "workspace.css", "app-pages.css", "candy.css", "fixes.css")
 
 
 def _load_css() -> str:
@@ -32,7 +32,8 @@ _BACKGROUND = """
 # Light mode flips the dark design (colours and brightness) and turns pictures back the right way up.
 _LIGHT_MODE = """
 <style>
-html { filter: invert(1) hue-rotate(180deg); background: #071033; }
+html { filter: invert(1) hue-rotate(180deg); background: #16101f; }
+.fm-mascot { filter: invert(1) hue-rotate(180deg); }
 img, video, [data-testid="stImage"] img { filter: invert(1) hue-rotate(180deg); }
 </style>
 """
@@ -52,6 +53,17 @@ html, body, .stApp { direction: rtl; }
 """
 
 
+# Each page gets its own pair of accent colours.
+_PAGE_ACCENTS = {
+    "home": ("#ff5fa2", "#ffb86b"),
+    "diagnosis": ("#5ff0c0", "#6cc7ff"),
+    "chat": ("#b69cff", "#ff5fa2"),
+    "dashboard": ("#6cc7ff", "#b69cff"),
+    "history": ("#ffb86b", "#5ff0c0"),
+    "about": ("#ff5fa2", "#b69cff"),
+}
+
+
 def inject_styles() -> None:
     st.markdown(f"<style>{_load_css()}</style>", unsafe_allow_html=True)
     st.markdown(_BACKGROUND, unsafe_allow_html=True)
@@ -59,6 +71,8 @@ def inject_styles() -> None:
         st.markdown(_LIGHT_MODE, unsafe_allow_html=True)
     if is_rtl():
         st.markdown(_RTL_MODE, unsafe_allow_html=True)
+    first, second = _PAGE_ACCENTS.get(st.session_state.get("page", "home"), _PAGE_ACCENTS["home"])
+    st.markdown(f"<style>:root {{ --a1: {first}; --a2: {second}; }}</style>", unsafe_allow_html=True)
     view = st.session_state.get("view")
     if view == "phone":
         st.markdown(f"<style>{PHONE_RULES} {PHONE_FRAME}</style>", unsafe_allow_html=True)

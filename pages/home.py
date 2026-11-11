@@ -5,6 +5,7 @@ from __future__ import annotations
 import streamlit as st
 
 from components.cards import render_device_grid
+from components.mascot import mascot
 from components.render import html_block
 from components.icons import icon, logo_mark
 from state import begin_diagnosis
@@ -53,30 +54,13 @@ def _hero() -> None:
 
     with right:
         html_block(
-            """
-            <div class="bp-stage" aria-label="Blueprint drawing of a phone with the faulty charging port circled">
-            <svg class="bp" viewBox="0 0 420 470" xmlns="http://www.w3.org/2000/svg">
-                <g class="ln">
-                    <path class="dr" pathLength="1" style="--i:0" d="M120 30h170M120 22v16M290 22v16"/>
-                    <rect class="dr" pathLength="1" style="--i:1" x="120" y="52" width="170" height="340" rx="26"/>
-                    <rect class="dr" pathLength="1" style="--i:2" x="135" y="76" width="140" height="292" rx="10"/>
-                    <path class="dr" pathLength="1" style="--i:3" d="M185 64h40"/>
-                    <path class="dr" pathLength="1" style="--i:4" d="M240 92l-22 46 18 14-26 52"/>
-                    <rect class="dr" pathLength="1" style="--i:5" x="165" y="250" width="76" height="38" rx="6"/>
-                    <path class="dr" pathLength="1" style="--i:5" d="M241 262h8v14h-8"/>
-                    <circle class="gear" cx="350" cy="130" r="30" stroke-width="9" stroke-dasharray="7 7"/>
-                    <circle cx="350" cy="130" r="19"/>
-                </g>
-                <text class="big" x="178" y="276">12%</text>
-                <text x="120" y="14">6.1 in</text>
-                <g class="late">
-                    <circle class="ring" cx="205" cy="392" r="13"/>
-                    <circle class="of" cx="205" cy="392" r="5"/>
-                    <path class="ln or" d="M205 398v28h195"/>
-                    <text x="214" y="420">A  charging port 78%</text>
-                    <text x="214" y="446" style="fill:#b4c2ff">fig. 1 - most likely cause</text>
-                </g>
-            </svg>
+            f"""
+            <div class="fm-hero-stage" aria-label="FixMate, a friendly phone character holding a wrench">
+                <div class="fm-bubble fm-bubble-a">My phone won't charge…</div>
+                {mascot("h")}
+                <div class="fm-bubble fm-bubble-b">Let's check the charging port first.</div>
+                <div class="fm-hero-chip fm-chip-1">{icon("shield", 18)}<span>Safety first</span></div>
+                <div class="fm-hero-chip fm-chip-2">{icon("wrench", 18)}<span>Step by step</span></div>
             </div>
             """)
 

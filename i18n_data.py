@@ -353,7 +353,19 @@ AR = {
 "Pick at least one symptom or describe the fault.": "اختر عَرَضاً واحداً على الأقل أو صف العطل.",
 "Pick the model": "اختر الطراز",
 "Select your model": "اختر طراز جهازك",
-"Model not listed? Type it here": "الطراز غير موجود؟ اكتبه هنا"
+"Model not listed? Type it here": "الطراز غير موجود؟ اكتبه هنا",
+"My phone won't charge…": "هاتفي لا يشحن…",
+"Let's check the charging port first.": "لنفحص منفذ الشحن أولاً.",
+"Safety first": "السلامة أولاً",
+"Step by step": "خطوة بخطوة",
+"Checking your device…": "أفحص جهازك…",
+"I'm reading your symptoms, ranking the causes and running the safety checks.": "أقرأ الأعراض وأرتّب الأسباب وأجري فحوصات الأمان.",
+"Looking at your photos…": "أنظر إلى صورك…",
+"I only describe what I can actually see, never hidden faults.": "أصف فقط ما أراه فعلاً، وليس الأعطال الخفية.",
+"Reading your symptoms": "قراءة الأعراض",
+"Running safety checks": "إجراء فحوصات الأمان",
+"Writing your plan": "كتابة خطتك",
+"Tip: unplug the device before you check anything.": "نصيحة: افصل الجهاز عن الكهرباء قبل أن تفحص أي شيء."
 }
 
 CKB = {
@@ -709,5 +721,17 @@ CKB = {
 "Pick at least one symptom or describe the fault.": "لانیکەم یەک نیشانە هەڵبژێرە یان کێشەکە وەسف بکە.",
 "Pick the model": "مۆدێلەکە هەڵبژێرە",
 "Select your model": "مۆدێلی ئامێرەکەت هەڵبژێرە",
-"Model not listed? Type it here": "مۆدێلەکەت نییە؟ لێرە بینووسە"
+"Model not listed? Type it here": "مۆدێلەکەت نییە؟ لێرە بینووسە",
+"My phone won't charge…": "مۆبایلەکەم شەحن ناکات…",
+"Let's check the charging port first.": "با سەرەتا دەرگای شەحن بپشکنین.",
+"Safety first": "سەلامەتی یەکەم",
+"Step by step": "هەنگاو بە هەنگاو",
+"Checking your device…": "ئامێرەکەت دەپشکنم…",
+"I'm reading your symptoms, ranking the causes and running the safety checks.": "نیشانەکانت دەخوێنمەوە و هۆکارەکان ڕیز دەکەم و پشکنینی سەلامەتی دەکەم.",
+"Looking at your photos…": "سەیری وێنەکانت دەکەم…",
+"I only describe what I can actually see, never hidden faults.": "تەنها ئەوە وەسف دەکەم کە بەڕاستی دەیبینم، نەک کێشە شاراوەکان.",
+"Reading your symptoms": "خوێندنەوەی نیشانەکان",
+"Running safety checks": "ئەنجامدانی پشکنینی سەلامەتی",
+"Writing your plan": "نووسینی پلانەکەت",
+"Tip: unplug the device before you check anything.": "ئامۆژگاری: پێش پشکنین ئامێرەکە لە کارەبا دابڕە."
 }
