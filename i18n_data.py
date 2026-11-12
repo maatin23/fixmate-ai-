@@ -365,7 +365,10 @@ AR = {
 "Reading your symptoms": "قراءة الأعراض",
 "Running safety checks": "إجراء فحوصات الأمان",
 "Writing your plan": "كتابة خطتك",
-"Tip: unplug the device before you check anything.": "نصيحة: افصل الجهاز عن الكهرباء قبل أن تفحص أي شيء."
+"Tip: unplug the device before you check anything.": "نصيحة: افصل الجهاز عن الكهرباء قبل أن تفحص أي شيء.",
+"Working on your report…": "نعمل على تقريرك…",
+"This usually takes a few seconds.": "يستغرق هذا عادةً بضع ثوانٍ.",
+"Checking your photos…": "نفحص صورك…"
 }
 
 CKB = {
@@ -733,5 +736,8 @@ CKB = {
 "Reading your symptoms": "خوێندنەوەی نیشانەکان",
 "Running safety checks": "ئەنجامدانی پشکنینی سەلامەتی",
 "Writing your plan": "نووسینی پلانەکەت",
-"Tip: unplug the device before you check anything.": "ئامۆژگاری: پێش پشکنین ئامێرەکە لە کارەبا دابڕە."
+"Tip: unplug the device before you check anything.": "ئامۆژگاری: پێش پشکنین ئامێرەکە لە کارەبا دابڕە.",
+"Working on your report…": "کار لەسەر ڕاپۆرتەکەت دەکرێت…",
+"This usually takes a few seconds.": "ئەمە زۆرجار چەند چرکەیەک دەخایەنێت.",
+"Checking your photos…": "وێنەکانت دەپشکنین…"
 }

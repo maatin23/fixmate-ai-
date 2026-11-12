@@ -10,7 +10,6 @@ import streamlit as st
 from i18n import t
 
 from components.icons import icon
-from components.mascot import mascot
 from components.render import compact_html, html_block
 from config import DEVICE_CATEGORIES
 from utils import escape
@@ -103,20 +102,11 @@ def render_metrics(cards: list[str]) -> None:
     html_block(f'<div class="fm-metric-grid">{"".join(cards)}</div>')
 
 
-def loader_html(title: str = "Checking your device…", subtitle: str = "I'm reading your symptoms, ranking the causes and running the safety checks.") -> str:
+def loader_html(title: str = "Working on your report…", subtitle: str = "This usually takes a few seconds.") -> str:
     return f"""
-        <div class="fm-loader2" role="status" aria-live="polite">
-            <div class="fm-loader2-card">
-                {mascot("l")}
-                <h3>{escape(title)}</h3>
-                <p>{escape(subtitle)}</p>
-                <ul class="fm-loader2-steps">
-                    <li style="--d:0s"><i></i><span>Reading your symptoms</span></li>
-                    <li style="--d:2s"><i></i><span>Running safety checks</span></li>
-                    <li style="--d:4s"><i></i><span>Writing your plan</span></li>
-                </ul>
-                <p class="fm-loader2-tip">Tip: unplug the device before you check anything.</p>
-            </div>
+        <div class="fm-loader3" role="status" aria-live="polite">
+            <span class="fm-spin"></span>
+            <div><b>{escape(title)}</b><small>{escape(subtitle)}</small></div>
         </div>
     """
 

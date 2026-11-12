@@ -32,7 +32,7 @@ _BACKGROUND = """
 # Light mode flips the dark design (colours and brightness) and turns pictures back the right way up.
 _LIGHT_MODE = """
 <style>
-html { filter: invert(1) hue-rotate(180deg); background: #16101f; }
+html { filter: invert(1) hue-rotate(180deg); background: #0d1716; }
 .fm-mascot { filter: invert(1) hue-rotate(180deg); }
 img, video, [data-testid="stImage"] img { filter: invert(1) hue-rotate(180deg); }
 </style>
@@ -55,12 +55,12 @@ html, body, .stApp { direction: rtl; }
 
 # Each page gets its own pair of accent colours.
 _PAGE_ACCENTS = {
-    "home": ("#ff5fa2", "#ffb86b"),
-    "diagnosis": ("#5ff0c0", "#6cc7ff"),
-    "chat": ("#b69cff", "#ff5fa2"),
-    "dashboard": ("#6cc7ff", "#b69cff"),
-    "history": ("#ffb86b", "#5ff0c0"),
-    "about": ("#ff5fa2", "#b69cff"),
+    "home": ("#2dd4bf", "#38bdf8"),
+    "diagnosis": ("#4ade80", "#2dd4bf"),
+    "chat": ("#38bdf8", "#818cf8"),
+    "dashboard": ("#818cf8", "#38bdf8"),
+    "history": ("#fbbf24", "#4ade80"),
+    "about": ("#2dd4bf", "#818cf8"),
 }
 
 

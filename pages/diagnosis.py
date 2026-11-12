@@ -317,8 +317,8 @@ def _intake_form(category: dict) -> None:
                 loader_slot = st.empty()
                 show_loader(
                     loader_slot,
-                    "Checking your device…",
-                    "I'm reading your symptoms, ranking the causes and running the safety checks.",
+                    "Working on your report…",
+                    "This usually takes a few seconds.",
                 )
                 try:
                     result = run_diagnosis(inputs)
@@ -458,8 +458,8 @@ def _render_vision_tab(diagnostic: dict) -> None:
         loader_slot = st.empty()
         show_loader(
             loader_slot,
-            "Looking at your photos…",
-            "I only describe what I can actually see, never hidden faults.",
+            "Checking your photos…",
+            "This usually takes a few seconds.",
         )
         try:
             inspected = run_image_analysis(prepared, diagnostic)
