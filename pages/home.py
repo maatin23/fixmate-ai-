@@ -1,297 +1,167 @@
-"""Landing page."""
+"""Landing page: hero with a report preview, stats, device picker, steps, features, trust band, FAQ."""
 
 from __future__ import annotations
 
 import streamlit as st
 
 from components.cards import render_device_grid
-from components.mascot import mascot
+from components.icons import icon
 from components.render import html_block
-from components.icons import icon, logo_mark
+from i18n import t
 from state import begin_diagnosis
 
 
+def _head(kicker: str, title: str, copy: str, anchor: str = "") -> None:
+    html_block(
+        f"""
+        <div class="pf-head" id="{anchor}">
+            <span class="pf-kicker">{kicker}</span>
+            <h2>{title}</h2>
+            <p>{copy}</p>
+        </div>
+        """
+    )
+
+
 def _hero() -> None:
-    left, right = st.columns([1.05, 0.95], gap="large", vertical_alignment="center")
+    left, right = st.columns([1.05, 1], gap="large", vertical_alignment="center")
     with left:
         html_block(
-            f"""
-            <div class="fm-hero">
-                <div class="fm-eyebrow fm-eyebrow-hero">
-                    <span class="fm-live-dot"></span> Safety-first repair help
-                </div>
-                <h1>Describe the problem.<br><span class="fm-grad-text">Get a safe plan.</span></h1>
-                <p class="fm-hero-sub">
-                    Describe the fault or attach a photo. FixMate maps plausible causes, separates safe checks
-                    from advanced repairs, and shows its uncertainty before you pick up a tool.
-                </p>
-                <div class="fm-hero-assurance">
-                    <span>{icon("shield", 14)} Safety guardrails</span>
-                    <span>{icon("eye", 14)} Vision inspection</span>
-                    <span>{icon("database", 14)} Local history</span>
-                </div>
+            """
+            <div class="pf-hero">
+                <span class="pf-badge"><span class="pf-dot"></span>Safety-first repair assistant</span>
+                <h1>Find out what's wrong with your device, safely.</h1>
+                <p class="pf-lead">Describe the problem or add a photo. FixMate ranks the likely causes, separates safe checks from advanced repairs, and tells you when to call a professional.</p>
             </div>
-            """)
-        cta_a, cta_b = st.columns([1, 1], gap="small")
-        with cta_a:
-            st.button(
-                "Start diagnosis",
-                key="hero_start",
-                type="primary",
-                width="stretch",
-                on_click=begin_diagnosis,
-                args=(),
-            )
-        with cta_b:
-            html_block(
-                """
-                <a class="fm-btn fm-btn-ghost fm-btn-inline" href="#device-lab">
-                    Explore devices <span class="fm-btn-arrow">↓</span>
-                </a>
-                """)
+            """
+        )
+        first, second = st.columns(2, gap="small")
+        with first:
+            st.button(t("Start diagnosis"), key="hero_start", type="primary", width="stretch", on_click=begin_diagnosis, args=())
+        with second:
+            html_block('<a class="pf-ghost" href="#how-it-works">See how it works</a>')
         html_block(
-            '<p class="fm-hero-footnote">AI-assisted guidance, not a confirmed diagnosis. No account required.</p>')
-
+            """
+            <ul class="pf-trust">
+                <li>No account needed</li>
+                <li>16 device types</li>
+                <li>English, Kurdish and Arabic</li>
+            </ul>
+            """
+        )
     with right:
         html_block(
             f"""
-            <div class="fm-hero-stage" aria-label="FixMate, a friendly phone character holding a wrench">
-                <div class="fm-bubble fm-bubble-a">My phone won't charge…</div>
-                {mascot("h")}
-                <div class="fm-bubble fm-bubble-b">Let's check the charging port first.</div>
-                <div class="fm-hero-chip fm-chip-1">{icon("shield", 18)}<span>Safety first</span></div>
-                <div class="fm-hero-chip fm-chip-2">{icon("wrench", 18)}<span>Step by step</span></div>
+            <div class="pf-preview" aria-label="Example diagnostic report">
+                <div class="pf-pv-head">
+                    <span class="pf-pv-icon">{icon("smartphone", 20)}</span>
+                    <div><b>iPhone 14</b><small>Won't charge</small></div>
+                    <span class="pf-pill">Medium risk</span>
+                </div>
+                <div class="pf-pv-body">
+                    <h4>Most likely causes</h4>
+                    <div class="pf-row"><span>Charging port debris</span><div class="pf-bar"><i style="--w:78%"></i></div><em>78%</em></div>
+                    <div class="pf-row"><span>Faulty cable or adapter</span><div class="pf-bar"><i style="--w:46%"></i></div><em>46%</em></div>
+                    <div class="pf-row"><span>Battery wear</span><div class="pf-bar"><i style="--w:24%"></i></div><em>24%</em></div>
+                    <h4 style="margin-top:18px">Safe checks first</h4>
+                    <ol>
+                        <li>Try another cable and a wall adapter.</li>
+                        <li>Look into the port with a torch for lint.</li>
+                        <li>Restart the phone.</li>
+                    </ol>
+                    <div class="pf-pv-foot">{icon("shield", 16)}<span>Advanced steps are withheld when something looks unsafe.</span></div>
+                </div>
             </div>
-            """)
+            """
+        )
 
 
-def _ticker() -> None:
-    items = [
-        "8 device categories",
-        "Vision-assisted inspection",
-        "Ranked hypotheses",
-        "Safety-first guardrails",
-        "Local SQLite history",
-        "Confidence-aware reports",
-        "Contextual repair chat",
-    ]
-    content = "".join(f'<span>{item}</span><i></i>' for item in items)
-    html_block(
-        f'<div class="fm-ticker"><div class="fm-ticker-track">{content}{content}</div></div>')
+def _stats() -> None:
+    items = [("16", "Device types"), ("1,400+", "Models and series"), ("3", "Languages"), ("0", "Sign-ups needed")]
+    cells = "".join(f'<div class="pf-stat"><b>{value}</b><span>{label}</span></div>' for value, label in items)
+    html_block(f'<div class="pf-stats">{cells}</div>')
 
 
 def _devices() -> None:
-    html_block('<div id="device-lab" class="fm-anchor"></div>')
-    html_block(
-        """
-        <div class="fm-section-head">
-            <span class="fm-eyebrow"><span class="fm-eyebrow-mark"></span>DEVICE LAB</span>
-            <div class="fm-section-title-row">
-                <h2>Choose your device.<br>We'll map the fault.</h2>
-                <p class="fm-section-copy">Each intake adapts to the hardware — from battery behaviour and screen
-                condition to drainage, cooling, error codes and unusual signs.</p>
-            </div>
-        </div>
-        """)
+    _head("Devices", "Choose your device", "Pick what is broken. FixMate adapts the questions to that device.", "devices")
     render_device_grid(begin_diagnosis, "home")
-    html_block(
-        '<p class="fm-center-note">Works with smartphones, computers, large appliances, displays and other electronics.</p>')
 
 
 def _how_it_works() -> None:
     steps = [
-        {
-            "num": "01",
-            "icon": "tune",
-            "title": "Describe the fault",
-            "copy": "A guided intake captures the symptoms, onset, error codes and any unusual sights or smells. Add photos if you have them.",
-            "tag": "2–3 minute intake",
-        },
-        {
-            "num": "02",
-            "icon": "layers",
-            "title": "Read the evidence",
-            "copy": "The AI ranks plausible causes, explains its reasoning and surfaces the uncertainty instead of hiding it.",
-            "tag": "Structured report",
-        },
-        {
-            "num": "03",
-            "icon": "chat",
-            "title": "Check, then act",
-            "copy": "Start with de-energized checks, inspect visible damage with vision, and ask follow-ups before deciding on a repair.",
-            "tag": "Context-aware follow-up",
-        },
+        ("1", "Describe the fault", "Pick your device, brand and model, then choose the symptoms. Add a photo if it helps."),
+        ("2", "Read the report", "You get ranked causes, safe checks first, and a clear note on how sure the AI is."),
+        ("3", "Fix it or get help", "Follow the safe steps, ask follow-up questions, or find a repair shop near you."),
     ]
     cards = "".join(
-        f"""
-        <article class="fm-step-card">
-            <div class="fm-step-top">
-                <span class="fm-step-number">{step['num']}</span>
-                <span class="fm-icon-tile fm-step-icon">{icon(step['icon'], 22)}</span>
-            </div>
-            <h3>{step['title']}</h3>
-            <p>{step['copy']}</p>
-            <span class="fm-step-tag">{step['tag']}</span>
-        </article>
-        """
-        for step in steps
+        f'<div class="pf-step"><span class="pf-step-n">{n}</span><h3>{title}</h3><p>{copy}</p></div>'
+        for n, title, copy in steps
     )
-    html_block(
-        f"""
-        <section class="fm-how">
-            <div class="fm-section-head">
-                <span class="fm-eyebrow"><span class="fm-eyebrow-mark"></span>HOW IT WORKS</span>
-                <div class="fm-section-title-row">
-                    <h2>From symptom to a safer next step.</h2>
-                    <p class="fm-section-copy">No black box. Each stage shows what went in, what it found, and where the limits are.</p>
-                </div>
-            </div>
-            <div class="fm-steps">{cards}</div>
-        </section>
-        """)
+    _head("How it works", "From symptom to a safer next step", "Three simple steps, and no account.", "how-it-works")
+    html_block(f'<div class="pf-steps">{cards}</div>')
 
 
 def _features() -> None:
-    features = [
-        {
-            "icon": "layers",
-            "label": "REASONING",
-            "title": "Ranked, not guessed",
-            "copy": "Possible causes are ordered by plausibility with a quick, safe test to tell them apart.",
-            "visual": '<div class="fm-mini-bars"><span style="width:82%"></span><span style="width:56%"></span><span style="width:34%"></span></div>',
-        },
-        {
-            "icon": "scan",
-            "label": "VISION",
-            "title": "Inspect visible damage",
-            "copy": "Upload clear photos for a visual pass that separates what is visible from what a camera cannot tell.",
-            "visual": '<div class="fm-mini-scan"><span></span></div>',
-        },
-        {
-            "icon": "shield",
-            "label": "SAFETY",
-            "title": "Guardrails stay on",
-            "copy": "A deterministic safety layer can escalate, withhold risky steps, and block live-work guidance.",
-            "visual": '<div class="fm-mini-rules"><span>live work</span><b>blocked</b><span>high voltage</span><b>blocked</b></div>',
-        },
-        {
-            "icon": "chat",
-            "label": "CONTEXT",
-            "title": "Ask better follow-ups",
-            "copy": "Clarify a step, request simpler language, or prepare the right questions for a technician.",
-            "visual": '<div class="fm-mini-chat"><span class="left"></span><span class="right"></span><span class="left short"></span></div>',
-        },
-        {
-            "icon": "database",
-            "label": "LOCAL-FIRST",
-            "title": "History without accounts",
-            "copy": "Sessions are saved to a local SQLite file for quick recall, search and comparison.",
-            "visual": '<div class="fm-mini-db"><span>local</span><span class="fm-mini-db-dot"></span><span>sqlite</span></div>',
-        },
-        {
-            "icon": "gauge",
-            "label": "HONESTY",
-            "title": "Uncertainty stated",
-            "copy": "Confidence and missing evidence are part of the report — never buried in fine print.",
-            "visual": '<div class="fm-mini-confidence"><span></span><span></span><span class="dim"></span></div>',
-        },
+    items = [
+        ("shield", "Safety guardrails", "Dangerous situations like swollen batteries or gas leaks stop the advice and tell you what to do."),
+        ("layers", "Ranked causes", "See the most likely cause first, with reasons in plain language."),
+        ("eye", "Photo inspection", "Add photos and the AI describes only the damage it can really see."),
+        ("chat", "Ask follow-ups", "Chat about your report and ask for simpler wording or next steps."),
+        ("tune", "Guided intake", "Brand and model pickers and symptom lists make describing the problem quick."),
+        ("wrench", "Repair shop finder", "One tap opens a map search for repair shops near you."),
     ]
     cards = "".join(
-        f"""
-        <article class="fm-feature-card">
-            <div class="fm-feature-head">
-                <span class="fm-icon-tile">{icon(feature['icon'], 22)}</span>
-                <span class="fm-feature-label">{feature['label']}</span>
-            </div>
-            <h3>{feature['title']}</h3>
-            <p>{feature['copy']}</p>
-            {feature['visual']}
-        </article>
-        """
-        for feature in features
+        f'<div class="pf-feature"><span class="pf-ic">{icon(name, 20)}</span><h3>{title}</h3><p>{copy}</p></div>'
+        for name, title, copy in items
     )
-    html_block(
-        f"""
-        <section class="fm-features">
-            <div class="fm-section-head">
-                <span class="fm-eyebrow"><span class="fm-eyebrow-mark"></span>SYSTEM CAPABILITIES</span>
-                <div class="fm-section-title-row">
-                    <h2>Built like an instrument,<br>not a magic box.</h2>
-                    <p class="fm-section-copy">Structured output, visible uncertainty and hard safety boundaries —
-                    designed for decisions that involve expensive or dangerous hardware.</p>
-                </div>
-            </div>
-            <div class="fm-feature-grid">{cards}</div>
-        </section>
-        """)
+    _head("Features", "Everything you need to fix with confidence", "Made for people who are not technicians.")
+    html_block(f'<div class="pf-features">{cards}</div>')
 
 
-def _safety() -> None:
+def _trust() -> None:
     html_block(
-        f"""
-        <section class="fm-safety">
-            <div class="fm-safety-copy">
-                <span class="fm-eyebrow fm-eyebrow-warn"><span class="fm-eyebrow-mark"></span>ENGINEERED FOR CAUTION</span>
-                <h2>A fast answer should never outrun safety.</h2>
-                <p>FixMate distinguishes basic, de-energized checks from repairs that require a qualified technician.
-                Hazard patterns can force a professional referral and remove risky advanced steps from the report.</p>
-                <div class="fm-hazard-chips">
-                    <span>{icon("bolt", 13)} Mains voltage</span>
-                    <span>{icon("thermometer", 13)} Swollen cells</span>
-                    <span>{icon("activity", 13)} Refrigerants</span>
-                    <span>{icon("alert", 13)} Thermal damage</span>
-                </div>
+        """
+        <div class="pf-band">
+            <div>
+                <h2>Built to be careful</h2>
+                <p>FixMate is advice, not a verdict. It never tells you to work on live electrical parts, and it says clearly when to stop.</p>
             </div>
-            <div class="fm-safety-rules">
-                <div class="fm-safety-rule">
-                    <span class="fm-safety-rule-icon">{icon("shield", 20)}</span>
-                    <div><b>No live-work guidance</b><p>Unplug first. Internal measurement and capacitor work are technician territory.</p></div>
-                </div>
-                <div class="fm-safety-rule">
-                    <span class="fm-safety-rule-icon">{icon("alert", 20)}</span>
-                    <div><b>Hazard escalation</b><p>Burning smells, damaged batteries, gas or refrigerant leaks trigger a stop-work response.</p></div>
-                </div>
-                <div class="fm-safety-rule">
-                    <span class="fm-safety-rule-icon">{icon("gauge", 20)}</span>
-                    <div><b>Confidence you can read</b><p>Every report states its uncertainty, the evidence gaps, and when to stop.</p></div>
-                </div>
-                <div class="fm-safety-foot">Advisory system · not a substitute for an in-person inspection</div>
-            </div>
-        </section>
-        """)
+            <ul>
+                <li>No live electrical work</li>
+                <li>Hazards trigger a stop notice</li>
+                <li>Uncertainty is always shown</li>
+            </ul>
+        </div>
+        """
+    )
+
+
+def _faq() -> None:
+    items = [
+        ("Is FixMate a replacement for a technician?", "No. It gives guidance and safe checks. For anything risky, it tells you to see a professional."),
+        ("Do I need an account?", "No. There is no sign-up, and each visitor only sees their own history."),
+        ("Which languages does it support?", "English, Kurdish (Sorani) and Arabic."),
+        ("Can I upload photos?", "Yes. Photos are checked for visible damage only and are not saved."),
+    ]
+    rows = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in items)
+    _head("FAQ", "Questions people ask", "")
+    html_block(f'<div class="pf-faq">{rows}</div>')
 
 
 def _final_cta() -> None:
-    with st.container(key="fm-home-cta"):
-        html_block(
-            """
-            <div class="fm-final-cta">
-                <div class="fm-cta-grid"></div>
-                <div class="fm-cta-glow"></div>
-                <span class="fm-eyebrow"><span class="fm-eyebrow-mark"></span>READY WHEN YOU ARE</span>
-                <h2>Bring the fault<br>into focus.</h2>
-                <p>Start with what you can see, hear, and smell. FixMate will help you decide what is safe to check next.</p>
-            </div>
-            """)
-        left, mid, right = st.columns([1.3, 1.2, 1.3])
-        with mid:
-            st.button(
-                "Start a diagnostic",
-                key="cta_start",
-                type="primary",
-                width="stretch",
-                on_click=begin_diagnosis,
-                args=(),
-            )
-        html_block(
-            f'<div class="fm-cta-note">{icon("lock", 13)} API key stays server-side · History stored locally · No account</div>')
+    with st.container(key="pf-cta"):
+        html_block("<h2>Ready to find the fault?</h2><p>It takes about two minutes and needs no account.</p>")
+        _, middle, _ = st.columns([1, 1, 1])
+        with middle:
+            st.button(t("Start diagnosis"), key="cta_start", type="primary", width="stretch", on_click=begin_diagnosis, args=())
 
 
 def render() -> None:
     _hero()
-    _ticker()
+    _stats()
     _devices()
     _how_it_works()
     _features()
-    _safety()
+    _trust()
+    _faq()
     _final_cta()

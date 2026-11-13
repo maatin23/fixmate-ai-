@@ -21,7 +21,7 @@ def _on_nav_change() -> None:
 
 
 def _toggle_theme() -> None:
-    st.session_state.theme = "light" if st.session_state.get("theme", "dark") == "dark" else "dark"
+    st.session_state.theme = "light" if st.session_state.get("theme", "light") == "dark" else "dark"
 
 
 def render_navbar() -> None:
@@ -47,7 +47,7 @@ def render_navbar() -> None:
         with lang_col:
             st.selectbox("Language", list(LANGS), format_func=LANGS.get, key="lang", label_visibility="collapsed")
         with theme_col:
-            is_dark = st.session_state.get("theme", "dark") == "dark"
+            is_dark = st.session_state.get("theme", "light") == "dark"
             st.button(
                 t("Light" if is_dark else "Dark"),
                 key="nav_theme_toggle",
